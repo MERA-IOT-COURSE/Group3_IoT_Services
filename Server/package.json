@@ -1,7 +1,6 @@
 {
-  "name": "protocol",
+  "name": "server",
   "version": "1.0.0",
-  "private": true,
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
     "models": "file:../Models",
-    "mqtt": "^2.18.8"
+    "protocol": "file:../Protocol"
   }
 }
