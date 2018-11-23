@@ -1,11 +1,18 @@
 const MQTT = require("mqtt")
-const RegisterRequest = require("../messages/register.request").RegisterRequest
-const RegisterResponse = require("../messages/register.response").RegisterResponse
-const SensorData = require("../messages/sensor.data").SensorData
-const ActionDeviceRequest = require("../messages/action.requests").ActionDeviceRequest
-const ActionSensorRequest = require("../messages/action.requests").ActionSensorRequest
-const ActionDeviceResponse = require("../messages/action.responses").ActionDeviceResponse
-const ActionSensorResponse = require("../messages/action.responses").ActionSensorResponse
+const models = require("models")
+
+const Message = models.objects.Message
+
+const RegisterRequest = models.messages.RegisterRequest
+const RegisterResponse = models.messages.RegisterResponse
+const SensorDataResponse = models.messages.SensorDataResponse
+const ActionDeviceRequest = models.messages.ActionDeviceRequest
+const ActionSensorRequest = models.messages.ActionSensorRequest
+const ActionDeviceResponse = models.messages.ActionDeviceResponse
+const ActionSensorResponse = models.messages.ActionSensorResponse
+
+const RegisterRequestData = models.data.RegisterRequestData
+const RegisterResponseData = models.data.RegisterResponseData
 
 const version = "1.0"
 
@@ -40,34 +47,38 @@ class AbstractServer extends AbstractHost {
     }
 
     prepare() {
-        this.client.on("message", (topic, message, packet) => { this.topicsListener(topic, message) })
+        this.client.on("message", (topic, messageData, packet) => {
+            var data = JSON.parse(messageData.toString())
+            var message = Message.parse(data)
+            this.topicsListener(topic, message)
+        })
         this.client.subscribe(`init_${this.backendId}`)
     }
 
     topicsListener(topic, message) {
-        var data = JSON.parse(message.toString())
         if (topic === `init_${this.backendId}`) {
-            switch (data["mid"]) {
+            switch (message.messageId) {
                 case RegisterRequest.message():
-                    var registerResponse = this.getRegisterResponse(data["data"])
-                    if (registerResponse === "OK") {
-                        this.client.subscribe(`be_${data["data"]["hw_id"]}`)
+                    var registerResponseData = this.getRegisterResponse(message.data)
+                    if (registerResponseData.status === "OK") {
+                        this.client.subscribe(`be_${message.data.device.id}`)
                     }
-                    this.client.publish(`dev_${data["data"]["hw_id"]}`, new RegisterResponse(registerResponse).create())
+                    this.client.publish(`dev_${message.data.device.id}`, new RegisterResponse(registerResponseData).create())
                     break
                 default:
                     break
             }
         } else if (topic.startsWith("be_")) {
-            switch (data["mid"]) {
-                case SensorData.message():
-                    this.handleSensorDataResponse(topic.substring(3), data["data"])
+            var deviceId = topic.substring(3)
+            switch (message.messageId) {
+                case SensorDataResponse.message():
+                    this.handleSensorDataResponse(deviceId, message.data)
                     break
                 case ActionDeviceResponse.message():
-                    this.handleDeviceActionResponse(data["data"])
+                    this.handleActionDeviceResponse(deviceId, message.data)
                     break
                 case ActionSensorResponse.message():
-                    this.handleSensorActionResponse(data["data"])
+                    this.handleActionSensorResponse(deviceId, message.data)
                     break
                 default:
                     break
@@ -75,32 +86,34 @@ class AbstractServer extends AbstractHost {
         }
     }
 
-    getRegisterResponse(data) {
-        return data["version"] === version ? this.initializeDevice(data) : "Unsupported version of protocol"
+    getRegisterResponse(registerRequestData) { // -> RegisterResponseData
+        return registerRequestData.version === version ?
+            this.handleRegisterRequest(registerRequestData) :
+            new RegisterResponseData("Unsupported version of protocol")
     }
 
-    initializeDevice(data) { // -> String
-        throw new Error("AbstarctServer: the implementation of \"initializeDevice\" method is required")
+    handleRegisterRequest(registerRequestData) { // -> RegisterResponseData
+        throw new Error("AbstarctServer: the implementation of \"handleRegisterRequest\" method is required")
     }
 
-    handleSensorDataResponse(deviceId, data) {
-        throw new Error("AbstarctServer: the implementation of \"handleSensorData\" method is required")
+    handleSensorDataResponse(deviceId, sensorDataResponseData) {
+        throw new Error("AbstarctServer: the implementation of \"handleSensorDataResponse\" method is required")
     }
 
-    handleDeviceActionResponse(data) {
-        throw new Error("AbstarctServer: the implementation of \"handleDeviceAction\" method is required")
+    handleActionDeviceResponse(deviceId, deviceActionResponseData) {
+        throw new Error("AbstarctServer: the implementation of \"handleActionDeviceResponse\" method is required")
     }
 
-    handleSensorActionResponse(data) {
-        throw new Error("AbstarctServer: the implementation of \"handleSensorAction\" method is required")
+    handleActionSensorResponse(deviceId, sensorActionResponseData) {
+        throw new Error("AbstarctServer: the implementation of \"handleActionSensorResponse\" method is required")
     }
 
-    callDeviceAction(deviceId, deviceActionId) {
-        this.client.publish(`dev_${deviceId}`, new ActionDeviceRequest(deviceActionId).create())
+    sendActionDeviceRequest(deviceId, actionDeviceRequestData) {
+        this.client.publish(`dev_${deviceId}`, new ActionDeviceRequest(actionDeviceRequestData).create())
     }
 
-    callSensorAction(deviceId, sensorActionId, sensorId) {
-        this.client.publish(`dev_${deviceId}`, new ActionSensorRequest(sensorActionId, sensorId).create())
+    sendActionSensorRequest(deviceId, actionSensorRequestData) {
+        this.client.publish(`dev_${deviceId}`, new ActionSensorRequest(actionSensorRequestData).create())
     }
 }
 
@@ -112,30 +125,32 @@ class AbstractDevice extends AbstractHost {
     }
 
     prepare() {
-        this.client.on("message", (topic, message, packet) => { this.topicsListener(topic, message) })
+        this.client.on("message", (topic, messageData, packet) => {
+            var data = JSON.parse(messageData.toString())
+            var message = Message.parse(data)
+            this.topicsListener(topic, message)
+        })
         this.client.subscribe(`dev_${this.device.id}`)
-        this.client.publish(`init_${this.backendId}`, new RegisterRequest(version, this.device).create())
+        var registerRequestData = new RegisterRequestData(version, this.device)
+        this.client.publish(`init_${this.backendId}`, new RegisterRequest(registerRequestData).create())
     }
 
     topicsListener(topic, message) {
-        var data = JSON.parse(message.toString())
-        if (topic.startsWith("dev_")) {
-            switch (data["mid"]) {
+        if (topic === `dev_${this.device.id}`) {
+            switch (message.messageId) {
                 case RegisterResponse.message():
-                    if (data["data"]["status"] != "OK") {
-                        this.end()
-                        throw new Error(`The registration procedure is failed: ${data["data"]["status"]}`)
+                    if (message.data.status !== "OK") {
+                        throw new Error(`The registration procedure is failed: ${message.data.status}`)
                     }
+                    this.handleRegisterResponse(message.data)
                     break
                 case ActionDeviceRequest.message():
-                    var actionDeviceResponse = this.handleDeviceActionRequest(data["data"]["id"])
-                    this.client.publish(`be_${this.device.id}`, new ActionDeviceResponse(data["data"]["id"],
-                        actionDeviceResponse["status"], actionDeviceResponse["data"]).create())
+                    var actionDeviceResponseData = this.handleActionDeviceRequest(message.data)
+                    this.client.publish(`be_${this.device.id}`, new ActionDeviceResponse(actionDeviceResponseData).create())
                     break
                 case ActionSensorRequest.message():
-                    var actionSensorResponse = this.handleSensorActionRequest(data["data"]["id"], data["data"]["sensor_id"])
-                    this.client.publish(`be_${this.device.id}`, new ActionSensorResponse(data["data"]["id"],
-                        data["data"]["sensor_id"], actionSensorResponse["status"], actionSensorResponse["data"]).create())
+                    var actionSensorResponseData = this.handleActionSensorRequest(message.data)
+                    this.client.publish(`be_${this.device.id}`, new ActionSensorResponse(actionSensorResponseData).create())
                     break
                 default:
                     break
@@ -143,16 +158,20 @@ class AbstractDevice extends AbstractHost {
         }
     }
 
-    handleDeviceActionRequest(deviceActionId) { // -> { status: String, data: String? }
-        throw new Error("AbstarctDevice: the implementation of \"handleDeviceActionRequest\" method is required")
+    handleRegisterResponse(registerResponseData) {
+        throw new Error("AbstarctDevice: the implementation of \"handleRegisterResponse\" method is required")
     }
 
-    handleSensorActionRequest(sensorActionId, sensorId) { // -> { status: String, data: String? }
-        throw new Error("AbstarctDevice: the implementation of \"handleSensorActionRequest\" method is required")
+    handleActionDeviceRequest(actionDeviceRequestData) { // -> ActionDeviceResponseData
+        throw new Error("AbstarctDevice: the implementation of \"handleActionDeviceRequest\" method is required")
     }
 
-    sendSensorDataResponse(sensorId, value, ts = null) {
-        this.client.publish(`be_${this.device.id}`, new SensorData(sensorId, value, ts).create())
+    handleActionSensorRequest(actionSensorRequestData) { // -> ActionSensorResponseData
+        throw new Error("AbstarctDevice: the implementation of \"handleActionSensorRequest\" method is required")
+    }
+
+    sendSensorDataResponse(sensorData) {
+        this.client.publish(`be_${this.device.id}`, new SensorDataResponse(sensorData).create())
     }
 }
 

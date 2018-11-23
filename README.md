@@ -2,11 +2,12 @@
 
 ## The main information:
 
-The repository includes _four_ service-applications:
+The repository includes _five_ modules:
 * **Device** - the implementation to run on a RaspberryPi device;
 * **Server** - the implementation to run on an available host;
+* **Models** - the implementation of DAL models for devices, sensors and actions;
 * **Protocol** - the instrument for a device and a server communication, requires a MQTT Broker instance;
-*  **Mosquitto** - the docker-compose configuration with default settings for MQTT Broker instances running.
+* **Mosquitto** - the docker-compose configuration with default settings for MQTT Broker instances running.
 
 ## The environment/requirements:
 
