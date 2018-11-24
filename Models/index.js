@@ -2,6 +2,7 @@ const Device = require("./src/objects/device")
 const Action = require("./src/objects/action")
 const Sensor = require("./src/objects/sensor")
 const Message = require("./src/objects/message")
+const Broker = require("./src/objects/broker")
 
 const Actions = require("./src/enums/actions")
 const Sensors = require("./src/enums/sensors")
@@ -27,7 +28,8 @@ module.exports = {
         "Device": Device,
         "Action": Action,
         "Sensor": Sensor,
-        "Message": Message
+        "Message": Message,
+        "Broker": Broker
     },
     "enums": {
         "Actions": Actions,

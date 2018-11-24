@@ -1,17 +1,16 @@
-const Broker = require("./src/communication/broker")
-
 const models = require("models")
 
 const Device = models.objects.Device
 const Sensor = models.objects.Sensor
+const Broker = models.objects.Broker
 
 const RegisterResponseData = models.data.RegisterResponseData
 const ActionDeviceResponseData = models.data.ActionDeviceResponseData
 const ActionSensorResponseData = models.data.ActionSensorResponseData
 const SensorData = models.data.SensorData
 
-const AbstractServer = require("./src/communication/hosts").AbstractServer
-const AbstractDevice = require("./src/communication/hosts").AbstractDevice
+const AbstractServer = require("./src/communication/server")
+const AbstractDevice = require("./src/communication/device")
 
 var broker = new Broker({
     host: "localhost",
