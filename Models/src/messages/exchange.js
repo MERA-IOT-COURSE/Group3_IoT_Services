@@ -1,12 +1,16 @@
+const utils = require("utils")
+const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
+const StaticNotImplementedError = utils.errors.StaticNotImplementedError
+
 const Message = require("../objects/message")
 
 class ExchangeInstance {
     static message() {
-        throw new Error("Instance: the implementation of \"message\" static method is required")
+        throw new StaticNotImplementedError(this.name)
     }
 
     properties() {
-        throw new Error("Instance: the implementation of \"properties\" method is required")
+        throw new AbstractNotImplementedError()
     }
 
     create() {

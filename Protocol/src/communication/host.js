@@ -1,6 +1,16 @@
 const MQTT = require("mqtt")
 
+const utils = require("utils")
+const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
+
 class AbstractHost {
+    static closeClientAndCreateError(client, error) {
+        if (client != null && client.connected) {
+            client.end()
+        }
+        return error
+    }
+
     constructor(broker) {
         this.broker = broker
         this.client = null
@@ -12,11 +22,11 @@ class AbstractHost {
     }
 
     prepare() {
-        throw new Error("AbstractHost: the implementation of \"prepare\" method is required")
+        throw AbstractHost.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
     }
 
     topicsListener(topic, message) {
-        throw new Error("AbstractHost: the implementation of \"topicsListener\" method is required")
+        throw AbstractHost.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
     }
 
     end() {

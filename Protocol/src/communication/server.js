@@ -15,6 +15,9 @@ const ActionSensorResponse = models.messages.ActionSensorResponse
 
 const RegisterResponseData = models.data.RegisterResponseData
 
+const utils = require("utils")
+const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
+
 class AbstractServer extends AbstractHost {
     constructor(broker, backendId) {
         super(broker)
@@ -68,19 +71,19 @@ class AbstractServer extends AbstractHost {
     }
 
     handleRegisterRequest(registerRequestData) { // -> RegisterResponseData
-        throw new Error("AbstarctServer: the implementation of \"handleRegisterRequest\" method is required")
+        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
     }
 
     handleSensorDataResponse(deviceId, sensorDataResponseData) {
-        throw new Error("AbstarctServer: the implementation of \"handleSensorDataResponse\" method is required")
+        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
     }
 
     handleActionDeviceResponse(deviceId, deviceActionResponseData) {
-        throw new Error("AbstarctServer: the implementation of \"handleActionDeviceResponse\" method is required")
+        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
     }
 
     handleActionSensorResponse(deviceId, sensorActionResponseData) {
-        throw new Error("AbstarctServer: the implementation of \"handleActionSensorResponse\" method is required")
+        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
     }
 
     sendActionDeviceRequest(deviceId, actionDeviceRequestData) {
