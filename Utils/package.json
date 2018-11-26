@@ -1,6 +1,7 @@
 {
-  "name": "device",
+  "name": "utils",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,10 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "models": "file:../Models",
-    "protocol": "file:../Protocol",
-    "utils": "file:../Utils"
+    "lowdb": "^1.0.0"
   }
 }

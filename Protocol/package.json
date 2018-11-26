@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "models": "file:../Models",
-    "mqtt": "^2.18.8"
+    "mqtt": "^2.18.8",
+    "utils": "file:../Utils"
   }
 }

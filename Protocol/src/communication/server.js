@@ -3,8 +3,6 @@ const version = require("./host").version
 
 const models = require("models")
 
-const Message = models.objects.Message
-
 const RegisterRequest = models.messages.RegisterRequest
 const RegisterResponse = models.messages.RegisterResponse
 const SensorDataResponse = models.messages.SensorDataResponse
@@ -15,30 +13,31 @@ const ActionSensorResponse = models.messages.ActionSensorResponse
 
 const RegisterResponseData = models.data.RegisterResponseData
 
+const utils = require("utils")
+const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
+
 class AbstractServer extends AbstractHost {
     constructor(broker, backendId) {
-        super(broker)
+        super("SERVER", broker)
         this.backendId = backendId
     }
 
     prepare() {
-        this.client.on("message", (topic, messageData, packet) => {
-            var data = JSON.parse(messageData.toString())
-            var message = Message.parse(data)
-            this.topicsListener(topic, message)
-        })
-        this.client.subscribe(`init_${this.backendId}`)
+        this.client.on("message", (topic, messageData, packet) => { this.getMessage(topic, messageData) })
+        this.subscribe(`init_${this.backendId}`)
     }
 
     topicsListener(topic, message) {
         if (topic === `init_${this.backendId}`) {
             switch (message.messageId) {
                 case RegisterRequest.message():
-                    var registerResponseData = this.getRegisterResponse(message.data)
+                    var registerResponseData = this.handleMessageWithResult(RegisterRequest, `init_${this.backendId}`, message.data, () => {
+                        return this.getRegisterResponse(message.data.device.id, message.data)
+                    })
                     if (registerResponseData.status === "OK") {
-                        this.client.subscribe(`be_${message.data.device.id}`)
+                        this.subscribe(`be_${message.data.device.id}`)
                     }
-                    this.client.publish(`dev_${message.data.device.id}`, new RegisterResponse(registerResponseData).create())
+                    this.sendMessage(RegisterResponse, `dev_${message.data.device.id}`, registerResponseData)
                     break
                 default:
                     break
@@ -47,13 +46,13 @@ class AbstractServer extends AbstractHost {
             var deviceId = topic.substring(3)
             switch (message.messageId) {
                 case SensorDataResponse.message():
-                    this.handleSensorDataResponse(deviceId, message.data)
+                    this.handleMessage(SensorDataResponse, topic, message.data, () => { this.handleSensorDataResponse(deviceId, message.data) })
                     break
                 case ActionDeviceResponse.message():
-                    this.handleActionDeviceResponse(deviceId, message.data)
+                    this.handleMessage(ActionDeviceResponse, topic, message.data, () => { this.handleActionDeviceResponse(deviceId, message.data) })
                     break
                 case ActionSensorResponse.message():
-                    this.handleActionSensorResponse(deviceId, message.data)
+                    this.handleMessage(ActionSensorResponse, topic, message.data, () => { this.handleActionSensorResponse(deviceId, message.data) })
                     break
                 default:
                     break
@@ -61,34 +60,34 @@ class AbstractServer extends AbstractHost {
         }
     }
 
-    getRegisterResponse(registerRequestData) { // -> RegisterResponseData
+    getRegisterResponse(deviceId, registerRequestData) { // -> RegisterResponseData
         return registerRequestData.version === version ?
-            this.handleRegisterRequest(registerRequestData) :
+            this.handleRegisterRequest(deviceId, registerRequestData) :
             new RegisterResponseData("Unsupported version of protocol")
     }
 
-    handleRegisterRequest(registerRequestData) { // -> RegisterResponseData
-        throw new Error("AbstarctServer: the implementation of \"handleRegisterRequest\" method is required")
+    handleRegisterRequest(deviceId, registerRequestData) { // -> RegisterResponseData
+        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
     }
 
     handleSensorDataResponse(deviceId, sensorDataResponseData) {
-        throw new Error("AbstarctServer: the implementation of \"handleSensorDataResponse\" method is required")
+        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
     }
 
     handleActionDeviceResponse(deviceId, deviceActionResponseData) {
-        throw new Error("AbstarctServer: the implementation of \"handleActionDeviceResponse\" method is required")
+        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
     }
 
     handleActionSensorResponse(deviceId, sensorActionResponseData) {
-        throw new Error("AbstarctServer: the implementation of \"handleActionSensorResponse\" method is required")
+        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
     }
 
     sendActionDeviceRequest(deviceId, actionDeviceRequestData) {
-        this.client.publish(`dev_${deviceId}`, new ActionDeviceRequest(actionDeviceRequestData).create())
+        this.sendMessage(ActionDeviceRequest, `dev_${deviceId}`, actionDeviceRequestData)
     }
 
     sendActionSensorRequest(deviceId, actionSensorRequestData) {
-        this.client.publish(`dev_${deviceId}`, new ActionSensorRequest(actionSensorRequestData).create())
+        this.sendMessage(ActionSensorRequest, `dev_${deviceId}`, actionSensorRequestData)
     }
 }
 

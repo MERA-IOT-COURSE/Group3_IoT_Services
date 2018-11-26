@@ -1,10 +1,14 @@
+const utils = require("utils")
+const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
+const StaticNotImplementedError = utils.errors.StaticNotImplementedError
+
 class Entity {
     static parse(data) {
-        throw new Error("Entity: the implementation of \"parse\" static method is required")
+        throw new StaticNotImplementedError(this.name)
     }
 
     properties() {
-        throw new Error("Entity: the implementation of \"properties\" method is required")
+        throw new AbstractNotImplementedError()
     }
 }
 
