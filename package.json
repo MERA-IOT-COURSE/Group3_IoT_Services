@@ -1,0 +1,21 @@
+{
+  "name": "group3_iot_services",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "node flow.js --install",
+    "reinstall": "node flow.js --reinstall",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MERA-IOT-COURSE/Group3_IoT_Services.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MERA-IOT-COURSE/Group3_IoT_Services/issues"
+  },
+  "homepage": "https://github.com/MERA-IOT-COURSE/Group3_IoT_Services#group-3---iot-services"
+}
