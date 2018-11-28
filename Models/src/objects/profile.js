@@ -10,6 +10,7 @@ class Profile {
                     port: 1883
                 }
             )
+        this.active = options["active"] || true
     }
 }
 
