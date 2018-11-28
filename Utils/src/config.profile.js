@@ -1,20 +1,16 @@
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('profile.json')
-const db = low(adapter)
+const AbstractNotImplementedError = require("./src/error.implementation").AbstractNotImplementedError
 
 class ConfigurationProfile {
-    constructor(profile) {
-        this.profile = profile
-        db.defaults({ "profile": new profile() }).write()
+    constructor(profileClass) {
+        this.profileClass = profileClass
     }
 
     get() {
-        return new this.profile(db.get("profile").value())
+        throw new AbstractNotImplementedError()
     }
 
-    update(profile) {
-        db.assign({ "profile": profile }).value()
+    update(profileObject) {
+        throw new AbstractNotImplementedError()
     }
 }
 

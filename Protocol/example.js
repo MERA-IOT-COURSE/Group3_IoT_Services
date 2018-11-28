@@ -13,7 +13,7 @@ const AbstractServer = require("./src/communication/server")
 const AbstractDevice = require("./src/communication/device")
 
 const utils = require("utils")
-const logs = utils.logs
+const logger = utils.logs.logger
 
 var broker = new Broker({
     host: "localhost",
@@ -24,39 +24,39 @@ var device = new Device("1", "Single", [new Sensor("1.1", "led.one_color")])
 
 class Server extends AbstractServer {
     handleRegisterRequest(deviceId, registerRequestData) {
-        logs.info(this.unit, `Handle register response for '${deviceId}' device`)
+        logger.info(`Handle register response for '${deviceId}' device`)
         return new RegisterResponseData("OK")
     }
 
     handleSensorDataResponse(deviceId, sensorDataResponseData) {
-        logs.info(this.unit, `Handle sensor data from '${deviceId}' device`)
+        logger.info(`Handle sensor data from '${deviceId}' device`)
     }
 
     handleActionDeviceResponse(deviceId, deviceActionResponseData) {
-        logs.info(this.unit, `Handle action response from '${deviceId}' device`)
+        logger.info(`Handle action response from '${deviceId}' device`)
     }
 
     handleActionSensorResponse(deviceId, sensorActionResponseData) {
-        logs.info(this.unit, `Handle action response from '${deviceId}' device's sensor`)
+        logger.info(`Handle action response from '${deviceId}' device's sensor`)
     }
 }
 
 class SingleDevice extends AbstractDevice {
     handleRegisterResponse(registerResponseData) {
         if (registerResponseData.status === "OK") {
-            logs.info(this.unit, `Initialization of '${this.device.id}' device is completed successfully`)
+            logger.info(`Initialization of '${this.device.id}' device is completed successfully`)
         } else {
-            logs.error(this.unit, `Initialization of '${this.device.id}' device is completed unsuccessfully`)
+            logger.error(`Initialization of '${this.device.id}' device is completed unsuccessfully`)
         }
     }
 
     handleActionDeviceRequest(actionDeviceRequestData) {
-        logs.info(this.unit, `Handle action request for '${this.device.id}' device`)
+        logger.info(`Handle action request for '${this.device.id}' device`)
         return new ActionDeviceResponseData(actionDeviceRequestData.id, "device: a lot of info")
     }
 
     handleActionSensorRequest(actionSensorRequestData) {
-        logs.info(this.unit, `Handle action request for '${this.device.id}' device's sensor`)
+        logger.info(`Handle action request for '${this.device.id}' device's sensor`)
         return new ActionSensorResponseData(actionSensorRequestData.id, actionSensorRequestData.sensorId, "sensor: a lot of info")
     }
 }
@@ -69,7 +69,7 @@ function start(newInstance) {
         if (instance != null) {
             instance.client.end()
         }
-        logs.fatal(instance.unit, `Unexpected error is thrown: ${error.message}. Exit...`)
+        logger.error(instance.unit, `Unexpected error is thrown: ${error.message}. Exit...`)
     }
 }
 

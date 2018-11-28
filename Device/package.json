@@ -12,6 +12,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "models": "file:../Models",
+    "morgan": "^1.9.1",
     "protocol": "file:../Protocol",
     "utils": "file:../Utils"
   }

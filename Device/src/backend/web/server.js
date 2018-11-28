@@ -1,6 +1,8 @@
 const Express = require("express")
 const requests = require("./requests")
 const path = require('path')
+const morgan = require("morgan")
+const stream = require("utils").logs.stream
 
 const staticPath = path.join(__dirname, '../../')
 const viewsPath = path.join(staticPath, 'views')
@@ -16,7 +18,9 @@ class ServerHandler {
         this.app.engine('html', require('ejs').renderFile)
         this.app.set('view engine', 'ejs')
         this.app.set('views', viewsPath)
-        this.app.use(Express.static(staticPath));
+        this.app.use(Express.static(staticPath))
+        const pattern = ':remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+        this.app.use(morgan(pattern, { stream: stream }))
 
         requests.all(this.app)
 

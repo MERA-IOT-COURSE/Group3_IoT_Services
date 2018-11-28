@@ -5,7 +5,7 @@ const Message = models.objects.Message
 
 const utils = require("utils")
 const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
-const logs = utils.logs
+const logger = utils.logs.logger
 
 class AbstractHost {
     static closeClientAndCreateError(client, error) {
@@ -15,20 +15,19 @@ class AbstractHost {
         return error
     }
 
-    constructor(unit, broker) {
-        this.unit = unit
+    constructor(broker) {
         this.broker = broker
         this.client = null
     }
 
     init() {
-        logs.debug(this.unit, "Begin to setup host")
-        logs.trace(this.unit, `Connecting to the broker: ${JSON.stringify(this.broker)}`)
+        logger.info("Begin to setup host")
+        logger.debug(`Connecting to the broker: ${JSON.stringify(this.broker)}`)
         this.client = MQTT.connect(`mqtt://${this.broker.host}:${this.broker.port}`)
         this.client.on("connect", () => {
-            logs.trace(this.unit, "Connected to the broker")
+            logger.debug("Connected to the broker")
             this.prepare()
-            logs.debug(this.unit, "Host is prepared")
+            logger.info("Host is prepared")
         })
     }
 
@@ -48,35 +47,35 @@ class AbstractHost {
 
     subscribe(topic) {
         this.client.subscribe(topic)
-        logs.debug(this.unit, `Subscribed on: '${topic}'`)
+        logger.info(`Subscribed on: '${topic}'`)
     }
 
     handleMessage(exchangeInstance, topic, data, callback) {
-        logs.trace(this.unit, `The message was got ('${exchangeInstance.message()}' <- '${topic}'):\n - ${JSON.stringify(data.properties())}`)
+        logger.debug(`The message was got ('${exchangeInstance.message()}' <- '${topic}'):\n - ${JSON.stringify(data.properties())}`)
         callback()
-        logs.trace(this.unit, `The message was handled ('${exchangeInstance.message()}' <- '${topic}')`)
+        logger.debug(`The message was handled ('${exchangeInstance.message()}' <- '${topic}')`)
     }
 
     handleMessageWithResult(exchangeInstance, topic, data, callback) {
-        logs.trace(this.unit, `The message was got ('${exchangeInstance.message()}' <- '${topic}'):\n - ${JSON.stringify(data.properties())}`)
+        logger.debug(`The message was got ('${exchangeInstance.message()}' <- '${topic}'):\n - ${JSON.stringify(data.properties())}`)
         var result = callback()
-        logs.trace(this.unit, `The message was handled ('${exchangeInstance.message()}' <- '${topic}')`)
+        logger.debug(`The message was handled ('${exchangeInstance.message()}' <- '${topic}')`)
         return result
     }
 
     sendMessage(exchangeInstance, topic, data) {
-        logs.trace(this.unit, `Sending the message ('${exchangeInstance.message()}' -> '${topic}'):\n - ${JSON.stringify(data.properties())}`)
+        logger.debug(`Sending the message ('${exchangeInstance.message()}' -> '${topic}'):\n - ${JSON.stringify(data.properties())}`)
         this.client.publish(topic, new exchangeInstance(data).create())
-        logs.trace(this.unit, `The message was sent ('${exchangeInstance.message()}' -> '${topic}')`)
+        logger.debug(`The message was sent ('${exchangeInstance.message()}' -> '${topic}')`)
     }
 
     end() {
-        logs.trace(this.unit, "Disconnecting from the broker")
+        logger.debug("Disconnecting from the broker")
         if (this.client != null && this.client.connected) {
             this.client.end()
-            logs.trace(this.unit, "Disconnected from the broker")
+            logger.debug("Disconnected from the broker")
         } else {
-            logs.trace(this.unit, "Had already disconnected from the broker")
+            logger.debug("Had already disconnected from the broker")
         }
     }
 }
