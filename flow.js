@@ -9,8 +9,12 @@ function install(moduleName) {
 function remove(moduleName) {
     console.log(`Removing of the module: ${moduleName}`)
     if (/^win/i.test(process.platform)) {
-        childProcess.execSync(`powershell -Command "Remove-Item 'node_modules' -Recurse -Force`, { cwd: join(__dirname, moduleName), env: childProcess.env, stdio: 'inherit' })
-        childProcess.execSync(`powershell -Command "Remove-Item 'package-lock.json' -Recurse -Force`, { cwd: join(__dirname, moduleName), env: childProcess.env, stdio: 'inherit' })
+        try {
+            childProcess.execSync(`powershell -Command "Remove-Item 'node_modules' -Recurse -Force -ErrorAction Ignore`, { cwd: join(__dirname, moduleName), env: childProcess.env, stdio: 'inherit' })
+        } catch (e) { }
+        try {
+            childProcess.execSync(`powershell -Command "Remove-Item 'package-lock.json' -Recurse -Force -ErrorAction Ignore`, { cwd: join(__dirname, moduleName), env: childProcess.env, stdio: 'inherit' })
+        } catch (e) { }
     } else {
         childProcess.execSync(`rm -rf node_modules`, { cwd: join(__dirname, moduleName), env: childProcess.env, stdio: 'inherit' })
         childProcess.execSync(`rm -f package-lock.json`, { cwd: join(__dirname, moduleName), env: childProcess.env, stdio: 'inherit' })
