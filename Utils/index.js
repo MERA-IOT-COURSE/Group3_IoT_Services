@@ -1,5 +1,5 @@
 const notImplementedErrors = require("./src/error.implementation")
-const logs = require("./src/logs")
+const logs = require("./src/logger")
 
 module.exports = {
     "errors": {

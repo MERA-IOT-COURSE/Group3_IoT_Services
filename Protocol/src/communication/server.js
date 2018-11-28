@@ -18,7 +18,7 @@ const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
 
 class AbstractServer extends AbstractHost {
     constructor(broker, backendId) {
-        super("SERVER", broker)
+        super(broker)
         this.backendId = backendId
     }
 
