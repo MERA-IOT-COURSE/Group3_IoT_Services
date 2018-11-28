@@ -3,6 +3,7 @@ const Action = require("./src/objects/action")
 const Sensor = require("./src/objects/sensor")
 const Message = require("./src/objects/message")
 const Broker = require("./src/objects/broker")
+const Profile = require("./src/objects/profile")
 
 const Actions = require("./src/enums/actions")
 const Sensors = require("./src/enums/sensors")
@@ -29,7 +30,8 @@ module.exports = {
         "Action": Action,
         "Sensor": Sensor,
         "Message": Message,
-        "Broker": Broker
+        "Broker": Broker,
+        "Profile": Profile
     },
     "enums": {
         "Actions": Actions,
