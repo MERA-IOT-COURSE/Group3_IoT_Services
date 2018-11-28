@@ -1,17 +1,10 @@
-const Broker = require('models').objects.Broker
+const Profile = require('models').objects.Profile
 
-class Profile {
+class DeviceProfile extends Profile {
     constructor(options = {}) {
+        super(options)
         this.device = options["device"]
-        this.be_id = options["be_id"] || "server"
-        this.broker = options["broker"] ||
-            new Broker(
-                {
-                    host: "localhost",
-                    port: 1883
-                }
-            )
     }
 }
 
-module.exports = Profile
+module.exports = DeviceProfile
