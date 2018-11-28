@@ -1,4 +1,4 @@
-const Broker = require('models').objects.Broker
+const Broker = require("./broker")
 
 class Profile {
     constructor(options = {}) {
