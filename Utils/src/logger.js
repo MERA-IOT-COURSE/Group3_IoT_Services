@@ -25,6 +25,12 @@ const logger = createLogger({
     exitOnError: false
 })
 
+logger.stream = {
+    write: function (message, encoding) {
+        logger.info(message.slice(0, -1))
+    },
+}
+
 class Logger {
     error(message) {
         logger.error(message)
@@ -48,5 +54,6 @@ class Logger {
 }
 
 module.exports = {
-    "logger": new Logger()
+    "logger": new Logger(),
+    "stream": logger.stream
 }
