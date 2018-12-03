@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require("fs")
+const path = require("path")
 
 function createDirectory(directory) {
     if (!fs.existsSync(directory)) {

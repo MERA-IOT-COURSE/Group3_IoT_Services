@@ -1,4 +1,4 @@
-const Profile = require('models').objects.Profile
+const Profile = require("models").objects.Profile
 
 class DeviceProfile extends Profile {
     constructor(options = {}) {
