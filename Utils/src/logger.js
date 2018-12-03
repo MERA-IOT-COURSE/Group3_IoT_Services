@@ -1,6 +1,6 @@
-const { createLogger, format, transports } = require('winston')
+const { createLogger, format, transports } = require("winston")
 const logsDirectory = require("./storage.output").logs
-require('winston-daily-rotate-file')
+require("winston-daily-rotate-file")
 
 function toLeft(level) {
     const leftPadding = "       "
@@ -8,10 +8,10 @@ function toLeft(level) {
 }
 
 const logger = createLogger({
-    level: 'silly',
+    level: "silly",
     format: format.combine(
         format.timestamp({
-            format: 'YYYY-MM-DD HH:mm:ss.SSS'
+            format: "YYYY-MM-DD HH:mm:ss.SSS"
         }),
         format.printf(log => `[ ${log.timestamp} | ${toLeft(log.level.toUpperCase())} ] ${log.message}`)
     ),
@@ -19,7 +19,7 @@ const logger = createLogger({
         new transports.Console(),
         new transports.DailyRotateFile({
             filename: `${logsDirectory}/%DATE%-results.log`,
-            datePattern: 'YYYY-MM-DD'
+            datePattern: "YYYY-MM-DD"
         })
     ],
     exitOnError: false

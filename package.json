@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "node flow.js --install",
-    "reinstall": "node flow.js --reinstall",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-all": "node flow.js --install-all",
+    "uninstall-all": "node flow.js --uninstall-all",
+    "reinstall-all": "node flow.js --reinstall-all",
+    "lint": "eslint **/src/**/*.js --quiet",
+    "test": "mocha **/test/*"
   },
   "repository": {
     "type": "git",
@@ -17,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/MERA-IOT-COURSE/Group3_IoT_Services/issues"
   },
-  "homepage": "https://github.com/MERA-IOT-COURSE/Group3_IoT_Services#group-3---iot-services"
+  "homepage": "https://github.com/MERA-IOT-COURSE/Group3_IoT_Services#group-3---iot-services",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.9.0",
+    "mocha": "^5.2.0"
+  }
 }

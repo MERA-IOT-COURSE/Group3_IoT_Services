@@ -1,11 +1,11 @@
 const Express = require("express")
 const requests = require("./requests")
-const path = require('path')
+const path = require("path")
 const morgan = require("morgan")
 const stream = require("utils").logs.stream
 
-const staticPath = path.join(__dirname, '../../')
-const viewsPath = path.join(staticPath, 'views')
+const staticPath = path.join(__dirname, "../../")
+const viewsPath = path.join(staticPath, "views")
 
 class ServerHandler {
     constructor(port, host) {
@@ -15,11 +15,11 @@ class ServerHandler {
     }
 
     setup() {
-        this.app.engine('html', require('ejs').renderFile)
-        this.app.set('view engine', 'ejs')
-        this.app.set('views', viewsPath)
+        this.app.engine("html", require("ejs").renderFile)
+        this.app.set("view engine", "ejs")
+        this.app.set("views", viewsPath)
         this.app.use(Express.static(staticPath))
-        const pattern = ':remote-addr - :remote-user ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"'
+        const pattern = ":remote-addr - :remote-user \":method :url HTTP/:http-version\" :status :res[content-length] \":referrer\" \":user-agent\""
         this.app.use(morgan(pattern, { stream: stream }))
 
         requests.all(this.app)
