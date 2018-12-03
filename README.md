@@ -1,4 +1,4 @@
-# GROUP 3 - IoT Services
+# GROUP 3 - IoT Services | [![Build Status](https://travis-ci.org/MERA-IOT-COURSE/Group3_IoT_Services.svg?branch=master)](https://travis-ci.org/MERA-IOT-COURSE/Group3_IoT_Services)
 
 ## The main information:
 
