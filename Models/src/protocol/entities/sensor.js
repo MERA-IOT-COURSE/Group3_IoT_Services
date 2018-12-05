@@ -2,7 +2,7 @@ const Entity = require("../entity")
 
 class Sensor extends Entity {
     static parse(data) {
-        const Action = require("../objects/action")
+        const Action = require("./action")
 
         var id = data["id"]
         var type = data["type"]

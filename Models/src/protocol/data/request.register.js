@@ -2,7 +2,7 @@ const Entity = require("../entity")
 
 class RegisterRequestData extends Entity {
     static parse(data) {
-        const Device = require("../objects/device")
+        const Device = require("../entities/device")
 
         var version = data["version"]
         var device = Device.parse({

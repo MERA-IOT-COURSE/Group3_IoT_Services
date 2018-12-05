@@ -1,7 +1,6 @@
 const models = require("models")
-
-const ActionDeviceResponseData = models.data.ActionDeviceResponseData
-const ActionSensorResponseData = models.data.ActionSensorResponseData
+const ActionDeviceResponseData = models.protocol.data.ActionDeviceResponseData
+const ActionSensorResponseData = models.protocol.data.ActionSensorResponseData
 
 const AbstractDevice = require("protocol").AbstractDevice
 

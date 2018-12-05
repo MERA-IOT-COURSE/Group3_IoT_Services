@@ -1,5 +1,5 @@
 const { createLogger, format, transports } = require("winston")
-const logsDirectory = require("./storage.output").logs
+const logsDirectory = require("../storage/output").logs
 require("winston-daily-rotate-file")
 
 function toLeft(level) {

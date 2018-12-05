@@ -11,5 +11,6 @@ function createDirectory(directory) {
 const output = createDirectory("output")
 
 module.exports = {
-    "logs": createDirectory(path.join(output, "logs"))
+    "logs": createDirectory(path.join(output, "logs")),
+    "localdb": createDirectory(path.join(output, "localdb"))
 }

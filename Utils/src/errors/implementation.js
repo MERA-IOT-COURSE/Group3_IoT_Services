@@ -1,4 +1,4 @@
-const CustomError = require("./error.custom")
+const CustomError = require("./custom")
 
 class NotImplementedError extends CustomError {
     constructor(message = undefined) {

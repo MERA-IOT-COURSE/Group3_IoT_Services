@@ -1,5 +1,5 @@
 const expect = require("chai").expect
-const notImplementedErrors = require("../src/error.implementation")
+const notImplementedErrors = require("../src/errors/implementation")
 
 var abstractMethodError = null
 var staticMethodError = null

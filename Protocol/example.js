@@ -1,25 +1,18 @@
 const models = require("models")
-
-const Device = models.objects.Device
-const Sensor = models.objects.Sensor
-const Broker = models.objects.Broker
-
-const RegisterResponseData = models.data.RegisterResponseData
-const ActionDeviceResponseData = models.data.ActionDeviceResponseData
-const ActionSensorResponseData = models.data.ActionSensorResponseData
-const SensorData = models.data.SensorData
+const Broker = models.containers.Broker
+const Device = models.protocol.entities.Device
+const Sensor = models.protocol.entities.Sensor
+const RegisterResponseData = models.protocol.data.RegisterResponseData
+const ActionDeviceResponseData = models.protocol.data.ActionDeviceResponseData
+const ActionSensorResponseData = models.protocol.data.ActionSensorResponseData
+const SensorData = models.protocol.data.SensorData
 
 const AbstractServer = require("./src/communication/server")
 const AbstractDevice = require("./src/communication/device")
 
-const utils = require("utils")
-const logger = utils.logs.logger
+const logger = require("utils").logging.logger
 
-var broker = new Broker({
-    host: "localhost",
-    port: 1883
-})
-
+var broker = new Broker()
 var device = new Device("1", "Single", [new Sensor("1.1", "led.one_color")])
 
 class Server extends AbstractServer {

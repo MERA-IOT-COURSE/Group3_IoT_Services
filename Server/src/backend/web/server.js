@@ -2,7 +2,7 @@ const Express = require("express")
 const requests = require("./requests")
 const path = require("path")
 const morgan = require("morgan")
-const stream = require("utils").logs.stream
+const stream = require("utils").logging.stream
 
 const staticPath = path.join(__dirname, "../../")
 const viewsPath = path.join(staticPath, "views")
