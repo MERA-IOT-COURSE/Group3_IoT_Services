@@ -83,3 +83,4 @@ package-lock.json
 
 # Modules specific folder for its purposes
 output
+Database/data

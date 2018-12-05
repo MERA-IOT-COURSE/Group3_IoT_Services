@@ -4,20 +4,21 @@
 
 ### The repository
 
-The repository includes _six_ modules:
+The repository includes _seven_ modules:
 * **Device** - the implementation to run on a RaspberryPi device;
 * **Server** - the implementation to run on an available host;
 * **Models** - the implementation of DAL models for devices, sensors and actions;
 * **Protocol** - the instrument for a device and a server communication, requires a MQTT Broker instance;
 * **Utils** - the module of utils;
-* **Broker** - the docker-compose configuration with default settings for MQTT Broker instances running.
+* **Broker** - the docker-compose configuration with default settings for a MQTT Broker instance running;
+* **Database** - the docker configuration for MongoDB and Mongo Express instances running.
 
 ### The environment/requirements:
 
 * node.js - v10.14.1
 * npm - 6.4.1
 * Docker Engine - 18.09.0
-* Docker Compose - 1.23.1
+* Docker Compose - 1.23.2
 
 ## Useful commands:
 
@@ -32,6 +33,26 @@ Change directory to relocate into Broker folder:
 Up Docker Compose container (without output):
 
 > **Broker**> docker-compose up -d
+
+### How to run a MongoDB instance without Mongo Express?
+
+Change directory to relocate into Database folder:
+
+> **Group3_IoT_Services**> cd Database
+
+Up Docker Compose container (without output):
+
+> **Database**> docker-compose run -d mongodb
+
+### How to run a MongoDB instance with Mongo Express?
+
+Change directory to relocate into Database folder:
+
+> **Group3_IoT_Services**> cd Database
+
+Up Docker Compose containers (without output):
+
+> **Database**> docker-compose up -d
 
 ### How to install/unistall/reinstall all modules?
 
