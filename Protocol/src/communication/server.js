@@ -67,19 +67,19 @@ class AbstractServer extends AbstractHost {
     }
 
     handleRegisterRequest(deviceId, registerRequestData) { // -> RegisterResponseData
-        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
+        throw new AbstractNotImplementedError()
     }
 
     handleSensorDataResponse(deviceId, sensorDataResponseData) {
-        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
+        throw new AbstractNotImplementedError()
     }
 
     handleActionDeviceResponse(deviceId, deviceActionResponseData) {
-        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
+        throw new AbstractNotImplementedError()
     }
 
     handleActionSensorResponse(deviceId, sensorActionResponseData) {
-        throw AbstractServer.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
+        throw new AbstractNotImplementedError()
     }
 
     sendActionDeviceRequest(deviceId, actionDeviceRequestData) {

@@ -61,30 +61,14 @@ class SingleDevice extends AbstractDevice {
     }
 }
 
-function start(newInstance) {
-    var instance = null
-    try {
-        instance = newInstance()
-    } catch (error) {
-        if (instance != null) {
-            instance.client.end()
-        }
-        logger.error(instance.unit, `Unexpected error is thrown: ${error.message}. Exit...`)
-    }
-}
-
 if (process.argv[2] === "s") {
-    start(() => {
-        var server = new Server(broker, "xromash")
-        server.init()
-        return server
-    })
+    var server = new Server(broker, "xromash")
+    server.init()
+    return server
 } else if (process.argv[2] === "d") {
-    start(() => {
-        var single = new SingleDevice(broker, "xromash", device)
-        single.init()
-        setTimeout(function () { single.sendSensorDataResponse(new SensorData("1.1", 45)) }, 1000)
-        setTimeout(function () { single.sendSensorDataResponse(new SensorData("1.1", 63, new Date())) }, 2000)
-        return single
-    })
+    var single = new SingleDevice(broker, "xromash", device)
+    single.init()
+    setTimeout(function () { single.sendSensorDataResponse(new SensorData("1.1", 45)) }, 1000)
+    setTimeout(function () { single.sendSensorDataResponse(new SensorData("1.1", 63, new Date())) }, 2000)
+    return single
 }
