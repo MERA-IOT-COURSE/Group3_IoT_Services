@@ -1,6 +1,6 @@
 const models = require("models")
+const RegisterResponseData = models.protocol.data.RegisterResponseData
 
-const RegisterResponseData = models.data.RegisterResponseData
 const AbstractServer = require("protocol").AbstractServer
 
 class ProtocolServer extends AbstractServer {

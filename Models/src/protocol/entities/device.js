@@ -2,8 +2,8 @@ const Entity = require("../entity")
 
 class Device extends Entity {
     static parse(data) {
-        const Sensor = require("../objects/sensor")
-        const Action = require("../objects/action")
+        const Sensor = require("./sensor")
+        const Action = require("./action")
 
         var id = data["hw_id"]
         var name = data["name"]

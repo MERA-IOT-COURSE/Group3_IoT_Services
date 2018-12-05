@@ -1,20 +1,18 @@
-const AbstractHost = require("./host").AbstractHost
-const version = require("./host").version
+const host = require("./host")
+const AbstractHost = host.AbstractHost
+const version = host.version
 
 const models = require("models")
+const RegisterRequest = models.protocol.messages.RegisterRequest
+const RegisterResponse = models.protocol.messages.RegisterResponse
+const SensorDataResponse = models.protocol.messages.SensorDataResponse
+const ActionDeviceRequest = models.protocol.messages.ActionDeviceRequest
+const ActionSensorRequest = models.protocol.messages.ActionSensorRequest
+const ActionDeviceResponse = models.protocol.messages.ActionDeviceResponse
+const ActionSensorResponse = models.protocol.messages.ActionSensorResponse
+const RegisterResponseData = models.protocol.data.RegisterResponseData
 
-const RegisterRequest = models.messages.RegisterRequest
-const RegisterResponse = models.messages.RegisterResponse
-const SensorDataResponse = models.messages.SensorDataResponse
-const ActionDeviceRequest = models.messages.ActionDeviceRequest
-const ActionSensorRequest = models.messages.ActionSensorRequest
-const ActionDeviceResponse = models.messages.ActionDeviceResponse
-const ActionSensorResponse = models.messages.ActionSensorResponse
-
-const RegisterResponseData = models.data.RegisterResponseData
-
-const utils = require("utils")
-const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
+const AbstractNotImplementedError = require("utils").errors.AbstractNotImplementedError
 
 class AbstractServer extends AbstractHost {
     constructor(broker, backendId) {

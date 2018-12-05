@@ -1,11 +1,10 @@
 const MQTT = require("mqtt")
 
-const models = require("models")
-const Message = models.objects.Message
+const Message = require("models").protocol.entities.Message
 
 const utils = require("utils")
 const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
-const logger = utils.logs.logger
+const logger = utils.logging.logger
 
 class AbstractHost {
     constructor(broker) {

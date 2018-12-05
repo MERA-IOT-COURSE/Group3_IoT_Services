@@ -1,12 +1,21 @@
-const ConfigurationProfile = require("./src/config.profile")
-const notImplementedErrors = require("./src/error.implementation")
-const logs = require("./src/logger")
+const lowdb = require("./src/database/lowdb")
+const notImplementedErrors = require("./src/errors/implementation")
+const logs = require("./src/logging/logger")
+const ConfigurationProfile = require("./src/profile/config")
 
 module.exports = {
-    "ConfigurationProfile": ConfigurationProfile,
+    "database": {
+        "lowdb": lowdb
+    },
     "errors": {
         "AbstractNotImplementedError": notImplementedErrors.AbstractNotImplementedError,
         "StaticNotImplementedError": notImplementedErrors.StaticNotImplementedError
     },
-    "logs": logs
+    "logging": {
+        "logger": logs.logger,
+        "stream": logs.stream
+    },
+    "profile": {
+        "ConfigurationProfile": ConfigurationProfile
+    }
 }

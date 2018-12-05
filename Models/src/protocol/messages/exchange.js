@@ -2,7 +2,7 @@ const utils = require("utils")
 const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
 const StaticNotImplementedError = utils.errors.StaticNotImplementedError
 
-const Message = require("../objects/message")
+const Message = require("../entities/message")
 
 class ExchangeInstance {
     static message() {
