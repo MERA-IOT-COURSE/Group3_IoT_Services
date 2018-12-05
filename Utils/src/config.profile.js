@@ -1,4 +1,4 @@
-const AbstractNotImplementedError = require("./src/error.implementation").AbstractNotImplementedError
+const AbstractNotImplementedError = require("./error.implementation").AbstractNotImplementedError
 
 class ConfigurationProfile {
     constructor(profileClass) {
