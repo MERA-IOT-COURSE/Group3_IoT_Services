@@ -4,6 +4,7 @@ services:
   mongodb:
     image: mongo
     container_name: mongodb
+    hostname: mongodb
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
@@ -26,6 +27,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: mongo-express
+    hostname: mongo-express
     restart: always
     ports:
       - "8081:8081"

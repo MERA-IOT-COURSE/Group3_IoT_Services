@@ -34,6 +34,12 @@ Change directory to relocate into Broker folder:
 user@host:Group3_IoT_Services$ cd Broker
 ```
 
+Build container if it's needed:
+
+```console
+user@host:Broker$ docker-compose build
+```
+
 Up container (without output):
 
 ```console
@@ -55,7 +61,7 @@ Change directory to relocate into Database folder:
 user@host:Group3_IoT_Services$ cd Database
 ```
 
-Build container:
+Build container if it's needed:
 
 ```console
 user@host:Database$ docker-compose build
@@ -79,6 +85,12 @@ Change directory to relocate into Database folder:
 
 ```console
 user@host:Group3_IoT_Services$ cd Database
+```
+
+Build container if it's needed:
+
+```console
+user@host:Database$ docker-compose build
 ```
 
 Up containers (without output):
