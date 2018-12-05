@@ -7,6 +7,11 @@ function toLeft(level) {
     return (level + leftPadding).substring(0, leftPadding.length)
 }
 
+const dailyRotateFileOptions = {
+    filename: `${logsDirectory}/%DATE%.log`,
+    datePattern: "YYYY-MM-DD"
+}
+
 const logger = createLogger({
     level: "silly",
     format: format.combine(
@@ -17,10 +22,10 @@ const logger = createLogger({
     ),
     transports: [
         new transports.Console(),
-        new transports.DailyRotateFile({
-            filename: `${logsDirectory}/%DATE%-results.log`,
-            datePattern: "YYYY-MM-DD"
-        })
+        new transports.DailyRotateFile(dailyRotateFileOptions)
+    ],
+    exceptionHandlers: [
+        new transports.DailyRotateFile(dailyRotateFileOptions)
     ],
     exitOnError: false
 })
