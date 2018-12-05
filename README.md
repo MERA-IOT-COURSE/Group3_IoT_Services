@@ -24,58 +24,123 @@ The repository includes _seven_ modules:
 
 Some useful commands are described in this block. 
 
-### How to run a MQTT Broker instance?
+### MQTT Broker
+
+#### How to run a MQTT Broker instance?
 
 Change directory to relocate into Broker folder:
 
-> **Group3_IoT_Services**> cd Broker
+```console
+user@host:Group3_IoT_Services$ cd Broker
+```
 
-Up Docker Compose container (without output):
+Up container (without output):
 
-> **Broker**> docker-compose up -d
+```console
+user@host:Broker$ docker-compose up -d
+```
 
-### How to run a MongoDB instance without Mongo Express?
+Down container:
+```console
+user@host:Broker$ docker-compose down
+```
+
+### MongoDB
+
+#### 1. How to run a MongoDB instance without Mongo Express?
 
 Change directory to relocate into Database folder:
 
-> **Group3_IoT_Services**> cd Database
+```console
+user@host:Group3_IoT_Services$ cd Database
+```
 
-Up Docker Compose container (without output):
+Build container:
 
-> **Database**> docker-compose run -d mongodb
+```console
+user@host:Database$ docker-compose build
+```
 
-### How to run a MongoDB instance with Mongo Express?
+Up container (without output):
+
+```console
+user@host:Database$ docker-compose run -d mongodb
+```
+
+Down container:
+
+```console
+user@host:Database$ docker-compose down
+```
+
+#### 2. How to run a MongoDB instance with Mongo Express?
 
 Change directory to relocate into Database folder:
 
-> **Group3_IoT_Services**> cd Database
+```console
+user@host:Group3_IoT_Services$ cd Database
+```
 
-Up Docker Compose containers (without output):
+Up containers (without output):
 
-> **Database**> docker-compose up -d
+```console
+user@host:Database$ docker-compose up -d
+```
 
-### How to install/unistall/reinstall all modules?
+Down container:
+
+```console
+user@host:Database$ docker-compose down
+```
+
+#### 3. How to run Mongo Shell?
+
+When step _1_ or _2_ is performed, you can run a special shell for MongoDB:
+
+```console
+user@host:Database$ docker exec -t -i mongodb mongo
+```
+
+#### 4. How to run Mongo Express?
+
+When step _2_ is performed, you can open link via browser to watch and configure DB data:
+
+> http://localhost:8081
+
+### NodeJS
+
+#### 1. How to install/unistall/reinstall all modules?
 
 Install all JS modules via npm (it's worth using in the first time):
 
-> **Group3_IoT_Services**> npm run install-all
+```console
+user@host:Group3_IoT_Services$ npm run install-all
+```
 
 Remove all dependencies and lock-files in all JS modules:
 
-> **Group3_IoT_Services**> npm run uninstall-all
+```console
+user@host:Group3_IoT_Services$ npm run uninstall-all
+```
 
 Install JS modules after removing of old dependencies:
 
-> **Group3_IoT_Services**> npm run reinstall-all
+```console
+user@host:Group3_IoT_Services$ npm run reinstall-all
+```
 
-### How to run unit tests?
+#### 2. How to run unit tests?
 
 Run unit tests in all JS modules:
 
-> **Group3_IoT_Services**> npm test
+```console
+user@host:Group3_IoT_Services$ npm test
+```
 
-### How to run lint?
+#### 3. How to run lint?
 
 Run lint for JavaScript files in all JS modules:
 
-> **Group3_IoT_Services**> npm run lint
+```console
+user@host:Group3_IoT_Services$ npm run lint
+```

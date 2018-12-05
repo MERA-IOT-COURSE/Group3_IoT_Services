@@ -8,9 +8,13 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=iot
+      - MONGO_USERNAME=user
+      - MONGO_PASSWORD=user
       - MONGO_DATA_DIR=/data/db
     volumes:
       - ./data/db:/data/db
+      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
     ports:
       - "27017:27017"
     command: mongod --smallfiles --logpath=/dev/null
