@@ -8,13 +8,6 @@ const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
 const logger = utils.logs.logger
 
 class AbstractHost {
-    static closeClientAndCreateError(client, error) {
-        if (client != null && client.connected) {
-            client.end()
-        }
-        return error
-    }
-
     constructor(broker) {
         this.broker = broker
         this.client = null
@@ -29,10 +22,13 @@ class AbstractHost {
             this.prepare()
             logger.info("Host is prepared")
         })
+        process.on("exit", () => this.closeClientAndExit())
+        process.on("SIGINT", () => process.exit())
+        process.on("uncaughtException", () => process.exit())
     }
 
     prepare() {
-        throw AbstractHost.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
+        throw new AbstractNotImplementedError()
     }
 
     getMessage(topic, messageData) {
@@ -42,7 +38,7 @@ class AbstractHost {
     }
 
     topicsListener(topic, message) {
-        throw AbstractHost.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
+        throw new AbstractNotImplementedError()
     }
 
     subscribe(topic) {
@@ -71,12 +67,22 @@ class AbstractHost {
 
     end() {
         logger.debug("Disconnecting from the broker")
-        if (this.client != null && this.client.connected) {
-            this.client.end()
-            logger.debug("Disconnected from the broker")
-        } else {
-            logger.debug("Had already disconnected from the broker")
+        try {
+            if (this.client != null && this.client.connected) {
+                this.client.end()
+                logger.debug("Disconnected from the broker")
+            } else {
+                logger.debug("Had already disconnected from the broker")
+            }
+        } catch (error) {
+            logger.error("Couldn't disconnect from the broker, connection closed forcibly")
+            this.client = null
         }
+    }
+
+    closeClientAndExit() {
+        this.end()
+        process.exit()
     }
 }
 

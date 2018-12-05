@@ -58,15 +58,15 @@ class AbstractDevice extends AbstractHost {
     }
 
     handleRegisterResponse(registerResponseData) {
-        throw AbstractDevice.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
+        throw new AbstractNotImplementedError()
     }
 
     handleActionDeviceRequest(actionDeviceRequestData) { // -> ActionDeviceResponseData
-        throw AbstractDevice.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
+        throw new AbstractNotImplementedError()
     }
 
     handleActionSensorRequest(actionSensorRequestData) { // -> ActionSensorResponseData
-        throw AbstractDevice.closeClientAndCreateError(this.client, new AbstractNotImplementedError())
+        throw new AbstractNotImplementedError()
     }
 
     sendSensorDataResponse(sensorData) {
