@@ -1,4 +1,4 @@
-const AbstractRequests = require("utils").web.AbstractRequests
+const AbstractRequests = require("common").models.containers.AbstractRequests
 
 class Requests extends AbstractRequests {
     get(app) {

@@ -1,6 +1,6 @@
-const utils = require("utils")
-const ConfigurationProfile = utils.profile.ConfigurationProfile
-const databaseHandler = utils.database.lowdb
+const common = require("common")
+const ConfigurationProfile = common.utils.profile.ConfigurationProfile
+const databaseHandler = common.utils.database.lowdb
 
 class DeviceConfigurationProfile extends ConfigurationProfile {
     constructor(profileClass) {

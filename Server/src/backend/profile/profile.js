@@ -1,4 +1,4 @@
-const Profile = require("models").containers.Profile
+const Profile = require("common").models.containers.Profile
 
 class ServerProfile extends Profile {
     constructor(options = {}) {

@@ -1,5 +1,5 @@
 {
-  "name": "protocol",
+  "name": "common",
   "version": "1.0.0",
   "private": true,
   "description": "",
@@ -10,8 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "models": "file:../Models",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "lowdb": "^1.0.0",
+    "morgan": "^1.9.1",
     "mqtt": "^2.18.8",
-    "utils": "file:../Utils"
+    "winston": "^3.1.0",
+    "winston-daily-rotate-file": "^3.5.1"
   }
 }

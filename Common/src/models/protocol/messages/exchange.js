@@ -1,6 +1,6 @@
-const utils = require("utils")
-const AbstractNotImplementedError = utils.errors.AbstractNotImplementedError
-const StaticNotImplementedError = utils.errors.StaticNotImplementedError
+const notImplementedErrors = require("../../../utils/errors/implementation")
+const AbstractNotImplementedError = notImplementedErrors.AbstractNotImplementedError
+const StaticNotImplementedError = notImplementedErrors.StaticNotImplementedError
 
 const Message = require("../entities/message")
 

@@ -1,9 +1,7 @@
 const ServerConfigurator = require("./configurator")
 
-function launcher(server) {
+module.exports = (server) => {
     new ServerConfigurator(server)
         .setup()
         .launch()
 }
-
-module.exports = launcher

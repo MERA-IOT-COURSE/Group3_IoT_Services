@@ -4,12 +4,10 @@
 
 ### The repository
 
-The repository includes _seven_ modules:
-* **Device** - the implementation to run on a RaspberryPi device;
-* **Server** - the implementation to run on an available host;
-* **Models** - the implementation of DAL models for devices, sensors and actions;
-* **Protocol** - the instrument for a device and a server communication, requires a MQTT Broker instance;
-* **Utils** - the module of utils;
+The repository includes _five_ modules:
+* **Common** - the implementation of DAL models and utils;
+* **Device** - the implementation to run on a RaspberryPi device, requires a MQTT Broker for communication with a server;
+* **Server** - the implementation to run on an available host, requires a MQTT Broker for communication with devices and a MongoDB to store data;
 * **Broker** - the docker-compose configuration with default settings for a MQTT Broker instance running;
 * **Database** - the docker configuration for MongoDB and Mongo Express instances running.
 
@@ -70,7 +68,7 @@ user@host:Database$ docker-compose build
 Up container (without output):
 
 ```console
-user@host:Database$ docker-compose run -d mongodb
+user@host:Database$ docker-compose up -d mongodb
 ```
 
 Down container:

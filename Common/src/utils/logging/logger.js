@@ -8,7 +8,7 @@ function toLeft(level) {
 }
 
 const dailyRotateFileOptions = {
-    filename: `${logsDirectory}/%DATE%.log`,
+    filename: `${logsDirectory()}/%DATE%.log`,
     datePattern: "YYYY-MM-DD"
 }
 
