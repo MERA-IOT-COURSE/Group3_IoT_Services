@@ -1,5 +1,5 @@
-const server = require("./src/backend/web/server")
+const launcher = require("utils").web.launcher
+const Server = require("models").containers.Server
+const Requests = require("./src/backend/web/requests")
 
-const host = "0.0.0.0"
-const port = 11296
-server.launch(port, host)
+launcher(new Server({ requests: new Requests() }))

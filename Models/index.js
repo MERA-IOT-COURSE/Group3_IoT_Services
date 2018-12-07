@@ -1,5 +1,6 @@
 const Broker = require("./src/containers/broker")
 const Profile = require("./src/containers/profile")
+const Server = require("./src/containers/server")
 
 const Device = require("./src/protocol/entities/device")
 const Action = require("./src/protocol/entities/action")
@@ -28,7 +29,8 @@ const SensorDataResponse = require("./src/protocol/messages/response.sensor")
 module.exports = {
     "containers": {
         "Broker": Broker,
-        "Profile": Profile
+        "Profile": Profile,
+        "Server": Server
     },
     "protocol": {
         "entities": {
