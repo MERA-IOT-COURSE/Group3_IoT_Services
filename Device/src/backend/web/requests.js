@@ -1,19 +1,11 @@
-function mainPage(app) {
-    app.get("/", (req, res) => {
-        res.render("main")
-    })
-}
+const AbstractRequests = require("common").models.containers.AbstractRequests
 
-class Requests {
-    constructor() {
-        this.requests = [mainPage]
-    }
-
-    all(app) {
-        this.requests.forEach(func => {
-            func(app)
+class Requests extends AbstractRequests {
+    get(app) {
+        app.get("/", (req, res) => {
+            res.render("main")
         })
     }
 }
 
-module.exports = new Requests()
+module.exports = Requests

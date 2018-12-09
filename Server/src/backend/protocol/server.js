@@ -1,7 +1,6 @@
-const models = require("models")
-
-const RegisterResponseData = models.data.RegisterResponseData
-const AbstractServer = require("protocol").AbstractServer
+const common = require("common")
+const RegisterResponseData = common.models.protocol.data.RegisterResponseData
+const AbstractServer = common.utils.protocol.AbstractServer
 
 class ProtocolServer extends AbstractServer {
     handleRegisterRequest(deviceId, registerRequestData) {

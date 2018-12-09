@@ -1,5 +1,14 @@
-const server = require("./src/backend/web/server")
+const common = require("common")
+const launcher = common.utils.web.launcher
+const Server = common.models.containers.Server
 
-const host = "0.0.0.0"
-const port = 11296
-server.launch(port, host)
+const Requests = require("./src/backend/web/requests")
+
+const static = require("path").join(__dirname, "./src")
+const requests = new Requests()
+const server = new Server({
+    static: static,
+    requests: requests
+})
+
+launcher(server)

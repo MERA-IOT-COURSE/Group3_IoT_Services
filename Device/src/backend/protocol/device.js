@@ -1,9 +1,7 @@
-const models = require("models")
-
-const ActionDeviceResponseData = models.data.ActionDeviceResponseData
-const ActionSensorResponseData = models.data.ActionSensorResponseData
-
-const AbstractDevice = require("protocol").AbstractDevice
+const common = require("common")
+const ActionDeviceResponseData = common.models.protocol.data.ActionDeviceResponseData
+const ActionSensorResponseData = common.models.protocol.data.ActionSensorResponseData
+const AbstractDevice = common.utils.protocol.AbstractDevice
 
 class ProtocolDevice extends AbstractDevice {
     handleRegisterResponse(registerResponseData) {

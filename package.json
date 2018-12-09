@@ -8,7 +8,7 @@
     "uninstall-all": "node flow.js --uninstall-all",
     "reinstall-all": "node flow.js --reinstall-all",
     "lint": "eslint **/src/**/*.js --quiet",
-    "test": "mocha **/test/*"
+    "test": "mocha **/test/**/test.*.js"
   },
   "repository": {
     "type": "git",

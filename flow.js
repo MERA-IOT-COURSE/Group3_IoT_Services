@@ -21,7 +21,7 @@ function remove(moduleName) {
     }
 }
 
-const modules = ["Utils", "Models", "Protocol", "Server", "Device"]
+const modules = ["Common", "Server", "Device"]
 
 switch (process.argv[2]) {
     case "--install-all":
