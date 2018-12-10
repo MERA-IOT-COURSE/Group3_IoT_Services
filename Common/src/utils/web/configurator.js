@@ -22,7 +22,11 @@ class ServerConfigurator {
     }
 
     launch() {
-        this.app.listen(this.server.port, this.server.host)
+        this.launched = this.app.listen(this.server.port, this.server.host)
+    }
+
+    stop() {
+        this.launched.close()
     }
 }
 
