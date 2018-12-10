@@ -2,6 +2,7 @@ const common = require("common")
 const ActionDeviceResponseData = common.models.protocol.data.ActionDeviceResponseData
 const ActionSensorResponseData = common.models.protocol.data.ActionSensorResponseData
 const AbstractDevice = common.utils.protocol.AbstractDevice
+const logger = common.utils.logging.logger
 
 class ProtocolDevice extends AbstractDevice {
     handleRegisterResponse(registerResponseData) {
