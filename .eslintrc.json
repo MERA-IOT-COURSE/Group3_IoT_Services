@@ -24,6 +24,12 @@
             "error",
             "never"
         ],
+        "camelcase": [
+            "error",
+            {
+                "properties": "always"
+            }
+        ],
         "no-unused-vars": [
             "off"
         ],

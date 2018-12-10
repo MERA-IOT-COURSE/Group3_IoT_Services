@@ -1,6 +1,7 @@
 const common = require("common")
 const RegisterResponseData = common.models.protocol.data.RegisterResponseData
 const AbstractServer = common.utils.protocol.AbstractServer
+const logger = common.utils.logging.logger
 
 class ProtocolServer extends AbstractServer {
     handleRegisterRequest(deviceId, registerRequestData) {
