@@ -9,7 +9,7 @@ class RegisterRequestData extends Entity {
             "hw_id": data["hw_id"],
             "name": data["name"],
             "sensors": data["sensors"],
-            "actions": data.hasOwnProperty("actions") ? data["actions"] : null
+            "actions": data.hasOwnProperty("actions") ? data["actions"] : []
         })
         return new RegisterRequestData(version, device)
     }

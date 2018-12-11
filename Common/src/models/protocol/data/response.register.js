@@ -3,7 +3,7 @@ const Entity = require("../entity")
 class RegisterResponseData extends Entity {
     static parse(data) {
         var status = data["status"]
-        var delay = data["registration_delay"]
+        var delay = data.hasOwnProperty("registration_delay") ? data["registration_delay"] : 0
         return new RegisterResponseData(status, delay)
     }
 
