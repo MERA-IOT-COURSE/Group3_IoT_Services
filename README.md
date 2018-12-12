@@ -18,6 +18,8 @@ The repository includes _five_ modules:
 * Docker Engine - 18.09.0
 * Docker Compose - 1.23.2
 
+__NOTICE__: this project works correctly just on Unix and macOS systems.
+
 ## Useful commands:
 
 Some useful commands are described in this block. 
