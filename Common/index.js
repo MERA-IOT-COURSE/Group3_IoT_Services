@@ -6,6 +6,7 @@ const Broker = require("./src/models/containers/broker")
 const Profile = require("./src/models/containers/profile")
 const AbstractRequests = require("./src/models/containers/requests")
 const Server = require("./src/models/containers/server")
+const MongoDB = require("./src/models/containers/mongodb")
 
 const Device = require("./src/models/protocol/entities/device")
 const Action = require("./src/models/protocol/entities/action")
@@ -37,6 +38,8 @@ const SensorDataResponse = require("./src/models/protocol/messages/response.sens
 
 const lowdb = require("./src/utils/database/lowdb")
 
+const mongodb = require("./src/utils/database/mongodb")
+
 const notImplementedErrors = require("./src/utils/errors/implementation")
 
 const logs = require("./src/utils/logging/logger")
@@ -58,7 +61,8 @@ module.exports = {
             "Broker": Broker,
             "Profile": Profile,
             "AbstractRequests": AbstractRequests,
-            "Server": Server
+            "Server": Server,
+            "MongoDB": MongoDB
         },
         "protocol": {
             "entities": {
@@ -93,7 +97,8 @@ module.exports = {
     },
     "utils": {
         "database": {
-            "lowdb": lowdb
+            "lowdb": lowdb,
+            "mongodb": mongodb
         },
         "errors": {
             "AbstractNotImplementedError": notImplementedErrors.AbstractNotImplementedError,
