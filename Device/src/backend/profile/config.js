@@ -1,10 +1,13 @@
+const DeviceProfile = require("./profile")
+
 const common = require("common")
 const ConfigurationProfile = common.utils.profile.ConfigurationProfile
 const databaseHandler = common.utils.database.lowdb
 
 class DeviceConfigurationProfile extends ConfigurationProfile {
-    constructor(profileClass) {
-        super(profileClass)
+    constructor() {
+        super()
+        this.profileClass = DeviceProfile
         this.database = databaseHandler(`${this.collection}.json`)
     }
 
