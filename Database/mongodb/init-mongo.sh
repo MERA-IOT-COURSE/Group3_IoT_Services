@@ -3,7 +3,8 @@ if [ "$MONGO_USERNAME" ] && [ "$MONGO_PASSWORD" ]; then
     db.createUser({
         user: $(_js_escape "$MONGO_USERNAME"),
         pwd: $(_js_escape "$MONGO_PASSWORD"),
-        roles: [ "readWrite", "dbAdmin" ]
+        roles: [ { role: "readWrite", db: $(_js_escape "$MONGO_INITDB_DATABASE") },
+                 { role: "dbAdmin", db: $(_js_escape "$MONGO_INITDB_DATABASE") } ]
     })
 EOJS
 fi
