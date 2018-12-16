@@ -17,7 +17,7 @@ class ServerConfigurator {
         this.app.set("views", path.join(this.server.static, "views"))
         this.app.use(express.static(this.server.static))
         this.app.use(morgan(pattern, { stream: stream }))
-        this.server.requests.methods().forEach(method => method(this.app))
+        this.server.requests.methods(this.app)
         return this
     }
 
