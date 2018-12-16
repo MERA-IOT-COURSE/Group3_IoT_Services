@@ -2,12 +2,307 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
 </head>
 
 <body>
-    <h1>Hello, World!</h1>
+    <section id="team" class="pb-5">
+        <div class="container">
+            <h5 class="section-title h1">Device</h5>
+            <div class="row">
+                <!-- Team member -->
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="image-flip">
+                        <div class="mainflip">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h4 class="card-title">Server <button type="button" class="btn btn-primary btn-sm"
+                                            data-toggle="modal" data-target="#serverModalCenter"><i class="fa fa-pencil"></i></button></h4>
+                                    <p class="card-text">ID: GROUP_3</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="serverModalCenter" tabindex="-1" role="dialog" aria-labelledby="serverModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title centered" id="serverModalCenterTitle">Edit server
+                                        settings</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="serverForm">
+                                        <div class="form-group">
+                                            <label for="ServerID">Server ID</label>
+                                            <input class="form-control" id="ServerID" placeholder="Enter Server ID"
+                                                value="565645ddsf">
+
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./Modal -->
+                </div>
+                <!-- ./Team member -->
+                <!-- Team member -->
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <div class="image-flip">
+                        <div class="mainflip">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h4 class="card-title">Broker <button type="button" class="btn btn-primary btn-sm"
+                                            data-toggle="modal" data-target="#brokerModalCenter"><i class="fa fa-pencil"></i></button></h4>
+                                    <p class="card-text">Host: localhost Port: 1883</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="brokerModalCenter" tabindex="-1" role="dialog" aria-labelledby="brokerModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title modal-title-centered" id="brokerModalCenterTitle">Edit
+                                        broker
+                                        settings</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="brokerForm">
+                                        <div class="form-group">
+                                            <label for="BrokerHost">Broker Host</label>
+                                            <input class="form-control" id="BrokerHost" placeholder="Host" value="localhost">
+                                            <label for="BrokerPort">Broker Port</label>
+                                            <input class="form-control" id="BrokerPort" placeholder="Port" value="1226">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./Modal -->
+                </div>
+                <!-- ./Team member -->
+            </div>
+            <div class="row">
+                <!-- Team member -->
+                <div class="col-xs-12 col-sm-6 col-md-12">
+                    <div class="mainflip">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">Device <button type="button" class="btn btn-primary btn-sm"
+                                        data-toggle="modal" data-target="#deviceEditModalCenter"><i class="fa fa-pencil"></i></button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#sensorAddModalCenter"><i class="fa fa-plus"></i></button></h4>
+                                <p class="card-text">ID: SN15614514</p>
+                                <p class="card-text">Sensors: 1</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="deviceEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="deviceEditModalCenterTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title modal-title-centered" id="deviceEditModalCenterTitle">Edit
+                                    device
+                                    settings</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="deviceEditForm">
+                                    <div class="form-group">
+                                        <label for="DeviceID">Device ID</label>
+                                        <input type="text" class="form-control" id="DeviceID" placeholder="Device ID"
+                                            value="151dfg">
+                                        <label for="DeviceName">Device name</label>
+                                        <input type="text" class="form-control" id="DeviceName" placeholder="Device name"
+                                            value="led">
+                                        <label for="deviceActions">Device
+                                            actions</label>
+                                        <select class="custom-select" id="deviceActions" multiple>
+                                            <option value="send">SEND
+                                            </option>
+                                            <option value="read">READ
+                                            </option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./Modal -->
+                <!-- Modal -->
+                <div class="modal fade" id="sensorAddModalCenter" tabindex="-1" role="dialog" aria-labelledby="sensorAddModalCenterTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title modal-title-centered" id="sensorAddModalCenterTitle">Add new
+                                    sensor
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="sensorAddForm">
+                                    <div class="form-group">
+                                        <label for="sensorID">Sensor ID</label>
+                                        <input type="text" class="form-control" id="sensorID" placeholder="Sensor ID">
+                                        <label for="sensorType">Sensor Type</label>
+                                        <input type="text" class="form-control" id="sensorType" placeholder="Sensor type">
+                                        <label for="sensorActions">Sensor actions</label>
+                                        <select class="custom-select" id="sensorActions" multiple>
+                                            <option value="send">SEND
+                                            </option>
+                                            <option value="read">READ
+                                            </option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Modal -->
+            <!-- ./Team member -->
+
+            <div class="row">
+                <!-- Team member -->
+                <div class="col-xs-12 col-sm-6 col-md-12">
+                    <div class="mainflip">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">Sensor <button type="button" class="btn btn-primary btn-sm"
+                                        data-toggle="modal" data-target="#sensorEditModalCenter"><i class="fa fa-pencil"></i></button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#sensorRemoveModalCenter"><i class="fa fa-trash-o"></i></button></h4>
+                                <p class="card-text">ID: SN415154145</p>
+                                <p class="card-text">Type: LED.OneColor</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="sensorEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="sensorEditModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title modal-title-centered" id="sensorEditModalCenterTitle">Edit
+                                        sensor
+                                        settings</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="sensorEditForm">
+                                        <div class="form-group">
+                                            <label for="sensorID">Sensor ID</label>
+                                            <input type="text" class="form-control" id="sensorID" placeholder="Sensor ID"
+                                                value="dfsfds435">
+                                            <label for="sensorType">Sensor Type</label>
+                                            <input type="text" class="form-control" id="sensorType" placeholder="Sensor type"
+                                                value="sdfssef">
+                                            <label for="sensorActions">Sensor actions</label>
+                                            <select class="custom-select" id="sensorActions" multiple>
+                                                <option value="send">SEND
+                                                </option>
+                                                <option value="read">READ
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./Modal -->
+                    <!-- Modal -->
+                    <div class="modal fade" id="sensorRemoveModalCenter" tabindex="-1" role="dialog" aria-labelledby="sensorRemoveModalCenterTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title modal-title-centered" id="sensorRemoveModalCenterTitle">Do
+                                        you really want to remove this sensor?
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./Modal -->
+            </div>
+        </div>
+        </div>
+        <!-- ./Team member -->
+        </div>
+
+
+        </div>
+    </section>
     <script src="../frontend/fe.stub.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 </body>
 <html>
