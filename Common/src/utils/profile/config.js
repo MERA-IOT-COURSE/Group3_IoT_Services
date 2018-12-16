@@ -1,8 +1,7 @@
 const AbstractNotImplementedError = require("../errors/implementation").AbstractNotImplementedError
 
 class ConfigurationProfile {
-    constructor(profileClass) {
-        this.profileClass = profileClass
+    constructor() {
         this.collection = "profile"
     }
 

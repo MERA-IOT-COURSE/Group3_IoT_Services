@@ -20,6 +20,9 @@ class MongoDB {
             this.password !== "" && this.password !== null && this.password !== undefined) {
             options["user"] = this.user
             options["pass"] = this.password
+            options["auth"] = {
+                authSource: this.schema
+            }
         }
         return options
     }

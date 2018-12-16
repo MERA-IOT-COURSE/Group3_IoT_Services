@@ -2,8 +2,6 @@
  * Models block
  */
 
-const Broker = require("./src/models/containers/broker")
-const Profile = require("./src/models/containers/profile")
 const AbstractRequests = require("./src/models/containers/requests")
 const Server = require("./src/models/containers/server")
 const MongoDB = require("./src/models/containers/mongodb")
@@ -58,8 +56,6 @@ const launcher = require("./src/utils/web/launcher")
 module.exports = {
     "models": {
         "containers": {
-            "Broker": Broker,
-            "Profile": Profile,
             "AbstractRequests": AbstractRequests,
             "Server": Server,
             "MongoDB": MongoDB
