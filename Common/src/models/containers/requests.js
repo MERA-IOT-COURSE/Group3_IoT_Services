@@ -11,13 +11,11 @@ class AbstractRequests {
     delete(app) {
     }
 
-    methods() {
-        return [
-            this.get,
-            this.post,
-            this.put,
-            this.delete
-        ]
+    methods(app) {
+        this.get(app)
+        this.post(app)
+        this.put(app)
+        this.delete(app)
     }
 }
 
