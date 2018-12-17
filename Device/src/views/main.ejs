@@ -9,14 +9,16 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../styles/style.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
 </head>
 
-<body>
-    <section id="team" class="pb-5">
+<body class="centered">
+    <section id="team" class="pb-5 col-12">
         <div class="container">
-            <h5 class="section-title h1">Device</h5>
+            <h1 class="section-title">Device application</h1>
+
+            <!-- Server -->
             <div class="row">
                 <!-- Team member -->
                 <div class="col-xs-12 col-sm-6 col-md-6">
@@ -24,9 +26,16 @@
                         <div class="mainflip">
                             <div class="card">
                                 <div class="card-body text-center">
-                                    <h4 class="card-title">Server <button type="button" class="btn btn-primary btn-sm"
-                                            data-toggle="modal" data-target="#serverModalCenter"><i class="fa fa-pencil"></i></button></h4>
-                                    <p class="card-text">ID: GROUP_3</p>
+                                    <h4 class="card-title">Server
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#serverModalCenter">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                    </h4>
+                                    <p class="card-text">
+                                        <b>ID</b>:
+                                        <%= profile.backendId %>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -37,8 +46,9 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title centered" id="serverModalCenterTitle">Edit server
-                                        settings</h5>
+                                    <h5 class="modal-title centered" id="serverModalCenterTitle">
+                                        Edit server settings
+                                    </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -46,16 +56,15 @@
                                 <div class="modal-body">
                                     <form id="serverForm">
                                         <div class="form-group">
-                                            <label for="ServerID">Server ID</label>
-                                            <input class="form-control" id="ServerID" placeholder="Enter Server ID"
-                                                value="565645ddsf">
-
+                                            <label for="serverID">Server ID</label>
+                                            <input class="form-control" id="serverID" placeholder="Enter Server ID"
+                                                value="<%= profile.backendId %>">
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-primary" id="saveServerForm">Save changes</button>
                                 </div>
                             </div>
                         </div>
@@ -63,15 +72,27 @@
                     <!-- ./Modal -->
                 </div>
                 <!-- ./Team member -->
+
+                <!-- Broker -->
                 <!-- Team member -->
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div class="image-flip">
                         <div class="mainflip">
                             <div class="card">
                                 <div class="card-body text-center">
-                                    <h4 class="card-title">Broker <button type="button" class="btn btn-primary btn-sm"
-                                            data-toggle="modal" data-target="#brokerModalCenter"><i class="fa fa-pencil"></i></button></h4>
-                                    <p class="card-text">Host: localhost Port: 1883</p>
+                                    <h4 class="card-title">Broker
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#brokerModalCenter">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                    </h4>
+                                    <p class="card-text">
+                                        <b>Host</b>:
+                                        <%= profile.broker.host %>
+                                        </br>
+                                        <b>Port</b>:
+                                        <%= profile.broker.port %>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -82,9 +103,9 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title modal-title-centered" id="brokerModalCenterTitle">Edit
-                                        broker
-                                        settings</h5>
+                                    <h5 class="modal-title modal-title-centered" id="brokerModalCenterTitle">
+                                        Edit broker settings
+                                    </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -92,16 +113,16 @@
                                 <div class="modal-body">
                                     <form id="brokerForm">
                                         <div class="form-group">
-                                            <label for="BrokerHost">Broker Host</label>
-                                            <input class="form-control" id="BrokerHost" placeholder="Host" value="localhost">
-                                            <label for="BrokerPort">Broker Port</label>
-                                            <input class="form-control" id="BrokerPort" placeholder="Port" value="1226">
+                                            <label for="brokerHost">Broker Host</label>
+                                            <input class="form-control" id="brokerHost" placeholder="Host" value="<%= profile.broker.host %>">
+                                            <label for="brokerPort">Broker Port</label>
+                                            <input class="form-control" id="brokerPort" placeholder="Port" value="<%= profile.broker.port %>">
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-primary" id="saveBrokerForm">Save changes</button>
                                 </div>
                             </div>
                         </div>
@@ -110,18 +131,47 @@
                 </div>
                 <!-- ./Team member -->
             </div>
+
+            <!-- Device -->
+            <% if (profile.device) { %>
             <div class="row">
                 <!-- Team member -->
                 <div class="col-xs-12 col-sm-6 col-md-12">
                     <div class="mainflip">
                         <div class="card">
                             <div class="card-body text-center">
-                                <h4 class="card-title">Device <button type="button" class="btn btn-primary btn-sm"
-                                        data-toggle="modal" data-target="#deviceEditModalCenter"><i class="fa fa-pencil"></i></button>
+                                <h4 class="card-title">Device
                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#sensorAddModalCenter"><i class="fa fa-plus"></i></button></h4>
-                                <p class="card-text">ID: SN15614514</p>
-                                <p class="card-text">Sensors: 1</p>
+                                        data-target="#deviceEditModalCenter">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#deviceRemoveModalCenter">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#sensorAddModalCenter">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </h4>
+                                <p class="card-text">
+                                    <b>ID</b>:
+                                    <%= profile.device.id %>
+                                    </br>
+                                    <b>Name</b>:
+                                    <%= profile.device.name %>
+                                    </br>
+                                    <b>Sensors</b>:
+                                    <%= profile.device.sensors.length %>
+                                    <% if (profile.device.actions.length > 0) { %>
+                                    </br>
+                                    <b>Actions</b>:
+                                    <%= profile.device.actions.map(action => `[ID: ${action.id}, name: ${action.name}]`).join(", ") %>
+                                    <% } %>
+                                    </br>
+                                    <b>Active</b>:
+                                    <%= profile.active %>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -132,9 +182,9 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title modal-title-centered" id="deviceEditModalCenterTitle">Edit
-                                    device
-                                    settings</h5>
+                                <h5 class="modal-title modal-title-centered" id="deviceEditModalCenterTitle">
+                                    Edit device settings
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -142,26 +192,75 @@
                             <div class="modal-body">
                                 <form id="deviceEditForm">
                                     <div class="form-group">
-                                        <label for="DeviceID">Device ID</label>
-                                        <input type="text" class="form-control" id="DeviceID" placeholder="Device ID"
-                                            value="151dfg">
-                                        <label for="DeviceName">Device name</label>
-                                        <input type="text" class="form-control" id="DeviceName" placeholder="Device name"
-                                            value="led">
-                                        <label for="deviceActions">Device
-                                            actions</label>
-                                        <select class="custom-select" id="deviceActions" multiple>
-                                            <option value="send">SEND
+                                        <label for="deviceID">Device ID</label>
+                                        <input type="text" class="form-control" id="deviceID" placeholder="Device ID"
+                                            value="<%= profile.device.id %>">
+                                        <label for="deviceName">Device name</label>
+                                        <input type="text" class="form-control" id="deviceName" placeholder="Device name"
+                                            value="<%= profile.device.name %>">
+                                        <label for="actionsDeviceCommon">Common device actions</label>
+                                        <select class="custom-select" id="actionsDeviceCommon" multiple>
+                                            <% for (var action in Actions.Device.Common) { %>
+                                            <option value="<%= action %>" <% if
+                                                (profile.device.actions.find(deviceAction=>
+                                                deviceAction.id === action && deviceAction.name ===
+                                                Actions.Device.Common[action])) {
+                                                %>selected
+                                                <% } %>>
+                                                <%= action %>
                                             </option>
-                                            <option value="read">READ
-                                            </option>
+                                            <% } %>
                                         </select>
+                                        <label for="actionsDeviceCustom">Custom device actions</label>
+                                        <select class="custom-select" id="actionsDeviceCustom" multiple>
+                                            <% for (var action in Actions.Device.Custom) { %>
+                                            <option value="<%= action %>" <% if
+                                                (profile.device.actions.find(deviceAction=>
+                                                deviceAction.id === action && deviceAction.name ===
+                                                Actions.Device.Custom[action])) {
+                                                %>selected
+                                                <% } %>>
+                                                <%= action %>
+                                            </option>
+                                            <% } %>
+                                        </select>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="activeBox" <%
+                                                if (profile.active==="true" ) { %>
+                                            checked
+                                            <% } %>
+                                            >
+                                            <label class="form-check-label" for="activeBox">
+                                                Active
+                                            </label>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-primary" id="saveDeviceEditForm">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./Modal -->
+                <!-- Modal -->
+                <div class="modal fade" id="deviceRemoveModalCenter" tabindex="-1" role="dialog" aria-labelledby="deviceRemoveModalCenterTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title modal-title-centered" id="deviceRemoveModalCenterTitle">
+                                    Do you really want to remove this device?
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="removeDevice">Remove</button>
                             </div>
                         </div>
                     </div>
@@ -173,8 +272,8 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title modal-title-centered" id="sensorAddModalCenterTitle">Add new
-                                    sensor
+                                <h5 class="modal-title modal-title-centered" id="sensorAddModalCenterTitle">
+                                    Add new sensor
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -186,20 +285,35 @@
                                         <label for="sensorID">Sensor ID</label>
                                         <input type="text" class="form-control" id="sensorID" placeholder="Sensor ID">
                                         <label for="sensorType">Sensor Type</label>
-                                        <input type="text" class="form-control" id="sensorType" placeholder="Sensor type">
-                                        <label for="sensorActions">Sensor actions</label>
-                                        <select class="custom-select" id="sensorActions" multiple>
-                                            <option value="send">SEND
+                                        <select class="custom-select" id="sensorType">
+                                            <% for (var type in Sensors.Types) { %>
+                                            <option value="<%= type %>">
+                                                <%= type %>
                                             </option>
-                                            <option value="read">READ
+                                            <% } %>
+                                        </select>
+                                        <label for="actionsSensorCommon">Common sensor actions</label>
+                                        <select class="custom-select" id="actionsSensorCommon" multiple>
+                                            <% for (var action in Actions.Sensor.Common) { %>
+                                            <option value="<%= action %>">
+                                                <%= action %>
                                             </option>
+                                            <% } %>
+                                        </select>
+                                        <label for="actionsSensorCustom">Custom sensor actions</label>
+                                        <select class="custom-select" id="actionsSensorCustom" multiple>
+                                            <% for (var action in Actions.Sensor.Custom) { %>
+                                            <option value="<%= action %>">
+                                                <%= action %>
+                                            </option>
+                                            <% } %>
                                         </select>
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-primary" id="saveSensorAddForm">Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -208,78 +322,122 @@
             <!-- ./Modal -->
             <!-- ./Team member -->
 
+            <!-- Sensors -->
+            <% for (var i = 0; i < profile.device.sensors.length; i++) { %>
             <div class="row">
                 <!-- Team member -->
                 <div class="col-xs-12 col-sm-6 col-md-12">
                     <div class="mainflip">
                         <div class="card">
                             <div class="card-body text-center">
-                                <h4 class="card-title">Sensor <button type="button" class="btn btn-primary btn-sm"
-                                        data-toggle="modal" data-target="#sensorEditModalCenter"><i class="fa fa-pencil"></i></button>
+                                <h4 class="card-title">Sensor
                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#sensorRemoveModalCenter"><i class="fa fa-trash-o"></i></button></h4>
-                                <p class="card-text">ID: SN415154145</p>
-                                <p class="card-text">Type: LED.OneColor</p>
+                                        data-target="#sensorEditModalCenter-<%= i %>">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#sensorRemoveModalCenter-<%= i %>">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </h4>
+                                <p class="card-text">
+                                    <b>ID</b>:
+                                    <%= profile.device.sensors[i].id %>
+                                    </br>
+                                    <b>Type</b>:
+                                    <%= profile.device.sensors[i].type %>
+                                    <% if (profile.device.sensors[i].actions.length > 0) { %>
+                                    </br>
+                                    <b>Actions</b>:
+                                    <%= profile.device.sensors[i].actions.map(action => `[ID: ${action.id}, name: ${action.name}]`).join(", ") %>
+                                    <% } %>
+                                </p>
                             </div>
                         </div>
                     </div>
                     <!-- Modal -->
-                    <div class="modal fade" id="sensorEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="sensorEditModalCenterTitle"
+                    <div class="modal fade" id="sensorEditModalCenter-<%= i %>" tabindex="-1" role="dialog" aria-labelledby="sensorEditModalCenterTitle-<%= i %>"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title modal-title-centered" id="sensorEditModalCenterTitle">Edit
-                                        sensor
-                                        settings</h5>
+                                    <h5 class="modal-title modal-title-centered" id="sensorEditModalCenterTitle-<%= i %>">
+                                        Edit sensor settings
+                                    </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="sensorEditForm">
+                                    <form id="sensorEditForm-<%= i %>">
                                         <div class="form-group">
-                                            <label for="sensorID">Sensor ID</label>
-                                            <input type="text" class="form-control" id="sensorID" placeholder="Sensor ID"
-                                                value="dfsfds435">
-                                            <label for="sensorType">Sensor Type</label>
-                                            <input type="text" class="form-control" id="sensorType" placeholder="Sensor type"
-                                                value="sdfssef">
-                                            <label for="sensorActions">Sensor actions</label>
-                                            <select class="custom-select" id="sensorActions" multiple>
-                                                <option value="send">SEND
+                                            <label for="sensorID-<%= i %>">Sensor ID</label>
+                                            <input type="text" class="form-control" id="sensorID-<%= i %>" placeholder="Sensor ID"
+                                                value="<%= profile.device.sensors[i].id %>">
+                                            <label for="sensorType-<%= i %>">Sensor Type</label>
+                                            <select class="custom-select" id="sensorType-<%= i %>">
+                                                <% for (var type in Sensors.Types) { %>
+                                                <option value="<%= type %>" <% if
+                                                    (profile.device.sensors[i].type === type) {
+                                                    %>selected
+                                                    <% } %>>
+                                                    <%= type %>
                                                 </option>
-                                                <option value="read">READ
+                                                <% } %>
+                                            </select>
+                                            <label for="actionsSensorCommon-<%= i %>">Common sensor actions</label>
+                                            <select class="custom-select" id="actionsSensorCommon-<%= i %>" multiple>
+                                                <% for (var action in Actions.Sensor.Common) { %>
+                                                <option value="<%= action %>" <% if
+                                                    (profile.device.sensors[i].actions.find(sensorAction=>
+                                                    sensorAction.id === action && sensorAction.name ===
+                                                    Actions.Sensor.Common[action])) {
+                                                    %>selected
+                                                    <% } %>>
+                                                    <%= action %>
                                                 </option>
+                                                <% } %>
+                                            </select>
+                                            <label for="actionsSensorCustom-<%= i %>">Custom sensor actions</label>
+                                            <select class="custom-select" id="actionsSensorCustom-<%= i %>" multiple>
+                                                <% for (var action in Actions.Sensor.Custom) { %>
+                                                <option value="<%= action %>" <% if
+                                                    (profile.device.sensors[i].actions.find(sensorAction=>
+                                                    sensorAction.id === action && sensorAction.name ===
+                                                    Actions.Sensor.Custom[action])) {
+                                                    %>selected
+                                                    <% } %>>
+                                                    <%= action %>
+                                                </option>
+                                                <% } %>
                                             </select>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-primary saveSensorEditForm" id="saveSensorEditForm-<%= i %>">Save changes</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- ./Modal -->
                     <!-- Modal -->
-                    <div class="modal fade" id="sensorRemoveModalCenter" tabindex="-1" role="dialog" aria-labelledby="sensorRemoveModalCenterTitle"
+                    <div class="modal fade" id="sensorRemoveModalCenter-<%= i %>" tabindex="-1" role="dialog" aria-labelledby="sensorRemoveModalCenterTitle-<%= i %>"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title modal-title-centered" id="sensorRemoveModalCenterTitle">Do
-                                        you really want to remove this sensor?
+                                    <h5 class="modal-title modal-title-centered" id="sensorRemoveModalCenterTitle-<%= i %>">
+                                        Do you really want to remove this sensor?
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Remove</button>
+                                    <button type="button" class="btn btn-primary removeSensor" id="removeSensor-<%= i %>">Remove</button>
                                 </div>
                             </div>
                         </div>
@@ -287,22 +445,103 @@
                 </div>
                 <!-- ./Modal -->
             </div>
+            <% } %>
         </div>
         </div>
         <!-- ./Team member -->
         </div>
-
-
+        <% } else { %>
+        <div class="row">
+            <!-- Team member -->
+            <div class="col-xs-12 col-sm-6 col-md-12">
+                <div class="mainflip">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">Device
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deviceAddModalCenter">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </h4>
+                            <p class="card-text">
+                                Profile has not information about device
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="deviceAddModalCenter" tabindex="-1" role="dialog" aria-labelledby="deviceAddModalCenterTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title modal-title-centered" id="deviceAddModalCenterTitle">
+                                Add device settings
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="deviceAddForm">
+                                <div class="form-group">
+                                    <label for="deviceID">Device ID</label>
+                                    <input type="text" class="form-control" id="deviceID" placeholder="Device ID">
+                                    <label for="deviceName">Device name</label>
+                                    <input type="text" class="form-control" id="deviceName" placeholder="Device name">
+                                    <label for="actionsDeviceCommon">Common device actions</label>
+                                    <select class="custom-select" id="actionsDeviceCommon" multiple>
+                                        <% for (var action in Actions.Device.Common) { %>
+                                        <option value="<%= action %>">
+                                            <%= action %>
+                                        </option>
+                                        <% } %>
+                                    </select>
+                                    <label for="actionsDeviceCustom">Custom device actions</label>
+                                    <select class="custom-select" id="actionsDeviceCustom" multiple>
+                                        <% for (var action in Actions.Device.Custom) { %>
+                                        <option value="<%= action %>">
+                                            <%= action %>
+                                        </option>
+                                        <% } %>
+                                    </select>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="activeBox" <% if
+                                            (profile.active) { %>checked
+                                        <% } %>>
+                                        <label class="form-check-label" for="activeBox">
+                                            Active
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="saveDeviceAddForm">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <% } %>
+
     </section>
-    <script src="../frontend/fe.stub.js"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <script src="../frontend/server.edit.js"></script>
+    <script src="../frontend/broker.edit.js"></script>
+    <script src="../frontend/device.add.js"></script>
+    <script src="../frontend/device.edit.js"></script>
+    <script src="../frontend/device.remove.js"></script>
+    <script src="../frontend/sensor.add.js"></script>
+    <script src="../frontend/sensor.edit.js"></script>
+    <script src="../frontend/sensor.remove.js"></script>
 </body>
-<html>
+
+</html>
