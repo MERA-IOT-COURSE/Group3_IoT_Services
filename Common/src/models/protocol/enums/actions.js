@@ -1,10 +1,12 @@
-const common = {
-    READ: "common.read"
-}
-
-const custom = {}
-
 module.exports = {
-    "Common": common,
-    "Custom": custom
+    "Device": {
+        "Common": {},
+        "Custom": {}
+    },
+    "Sensor": {
+        "Common": {
+            READ: "common.read"
+        },
+        "Custom": {}
+    }
 }
