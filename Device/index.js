@@ -2,8 +2,8 @@ const common = require("common")
 const launcher = common.utils.web.launcher
 const Server = common.models.containers.Server
 
-const Requests = require("./src/backend/web/requests")
 const ConfigurationProfile = require("./src/backend/profile/config")
+const Requests = require("./src/backend/web/requests")
 
 const static = require("path").join(__dirname, "./src")
 

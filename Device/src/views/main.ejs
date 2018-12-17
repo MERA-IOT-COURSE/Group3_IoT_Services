@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Device Application</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -16,7 +17,7 @@
 <body class="centered">
     <section id="team" class="pb-5 col-12">
         <div class="container">
-            <h1 class="section-title">Device application</h1>
+            <h1 class="section-title">Device Application</h1>
 
             <!-- Server -->
             <div class="row">
@@ -226,7 +227,7 @@
                                         </select>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" id="activeBox" <%
-                                                if (profile.active==="true" ) { %>
+                                                if (profile.active) { %>
                                             checked
                                             <% } %>
                                             >
@@ -324,9 +325,9 @@
 
             <!-- Sensors -->
             <% for (var i = 0; i < profile.device.sensors.length; i++) { %>
-            <div class="row">
+            <div class="row justify-content-end">
                 <!-- Team member -->
-                <div class="col-xs-12 col-sm-6 col-md-12">
+                <div class="col-xs-11 col-sm-4 col-md-11">
                     <div class="mainflip">
                         <div class="card">
                             <div class="card-body text-center">
@@ -356,8 +357,8 @@
                         </div>
                     </div>
                     <!-- Modal -->
-                    <div class="modal fade" id="sensorEditModalCenter-<%= i %>" tabindex="-1" role="dialog" aria-labelledby="sensorEditModalCenterTitle-<%= i %>"
-                        aria-hidden="true">
+                    <div class="modal fade" id="sensorEditModalCenter-<%= i %>" tabindex="-1" role="dialog"
+                        aria-labelledby="sensorEditModalCenterTitle-<%= i %>" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -377,9 +378,8 @@
                                             <label for="sensorType-<%= i %>">Sensor Type</label>
                                             <select class="custom-select" id="sensorType-<%= i %>">
                                                 <% for (var type in Sensors.Types) { %>
-                                                <option value="<%= type %>" <% if
-                                                    (profile.device.sensors[i].type === type) {
-                                                    %>selected
+                                                <option value="<%= type %>" <% if (profile.device.sensors[i].type===type)
+                                                    { %>selected
                                                     <% } %>>
                                                     <%= type %>
                                                 </option>
@@ -416,15 +416,16 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary saveSensorEditForm" id="saveSensorEditForm-<%= i %>">Save changes</button>
+                                    <button type="button" class="btn btn-primary saveSensorEditForm" id="saveSensorEditForm-<%= i %>">Save
+                                        changes</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- ./Modal -->
                     <!-- Modal -->
-                    <div class="modal fade" id="sensorRemoveModalCenter-<%= i %>" tabindex="-1" role="dialog" aria-labelledby="sensorRemoveModalCenterTitle-<%= i %>"
-                        aria-hidden="true">
+                    <div class="modal fade" id="sensorRemoveModalCenter-<%= i %>" tabindex="-1" role="dialog"
+                        aria-labelledby="sensorRemoveModalCenterTitle-<%= i %>" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -446,86 +447,84 @@
                 <!-- ./Modal -->
             </div>
             <% } %>
-        </div>
-        </div>
-        <!-- ./Team member -->
-        </div>
-        <% } else { %>
-        <div class="row">
-            <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-12">
-                <div class="mainflip">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h4 class="card-title">Device
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deviceAddModalCenter">
-                                    <i class="fa fa-plus"></i>
+            <!-- ./Team member -->
+            <% } else { %>
+            <div class="row">
+                <!-- Team member -->
+                <div class="col-xs-12 col-sm-6 col-md-12">
+                    <div class="mainflip">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">Device
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                        data-target="#deviceAddModalCenter">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </h4>
+                                <p class="card-text">
+                                    Profile has not information about device
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="deviceAddModalCenter" tabindex="-1" role="dialog" aria-labelledby="deviceAddModalCenterTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title modal-title-centered" id="deviceAddModalCenterTitle">
+                                    Add device settings
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
-                            </h4>
-                            <p class="card-text">
-                                Profile has not information about device
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="deviceAddModalCenter" tabindex="-1" role="dialog" aria-labelledby="deviceAddModalCenterTitle"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title modal-title-centered" id="deviceAddModalCenterTitle">
-                                Add device settings
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="deviceAddForm">
-                                <div class="form-group">
-                                    <label for="deviceID">Device ID</label>
-                                    <input type="text" class="form-control" id="deviceID" placeholder="Device ID">
-                                    <label for="deviceName">Device name</label>
-                                    <input type="text" class="form-control" id="deviceName" placeholder="Device name">
-                                    <label for="actionsDeviceCommon">Common device actions</label>
-                                    <select class="custom-select" id="actionsDeviceCommon" multiple>
-                                        <% for (var action in Actions.Device.Common) { %>
-                                        <option value="<%= action %>">
-                                            <%= action %>
-                                        </option>
-                                        <% } %>
-                                    </select>
-                                    <label for="actionsDeviceCustom">Custom device actions</label>
-                                    <select class="custom-select" id="actionsDeviceCustom" multiple>
-                                        <% for (var action in Actions.Device.Custom) { %>
-                                        <option value="<%= action %>">
-                                            <%= action %>
-                                        </option>
-                                        <% } %>
-                                    </select>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="activeBox" <% if
-                                            (profile.active) { %>checked
-                                        <% } %>>
-                                        <label class="form-check-label" for="activeBox">
-                                            Active
-                                        </label>
+                            </div>
+                            <div class="modal-body">
+                                <form id="deviceAddForm">
+                                    <div class="form-group">
+                                        <label for="deviceID">Device ID</label>
+                                        <input type="text" class="form-control" id="deviceID" placeholder="Device ID">
+                                        <label for="deviceName">Device name</label>
+                                        <input type="text" class="form-control" id="deviceName" placeholder="Device name">
+                                        <label for="actionsDeviceCommon">Common device actions</label>
+                                        <select class="custom-select" id="actionsDeviceCommon" multiple>
+                                            <% for (var action in Actions.Device.Common) { %>
+                                            <option value="<%= action %>">
+                                                <%= action %>
+                                            </option>
+                                            <% } %>
+                                        </select>
+                                        <label for="actionsDeviceCustom">Custom device actions</label>
+                                        <select class="custom-select" id="actionsDeviceCustom" multiple>
+                                            <% for (var action in Actions.Device.Custom) { %>
+                                            <option value="<%= action %>">
+                                                <%= action %>
+                                            </option>
+                                            <% } %>
+                                        </select>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="activeBox" <%
+                                                if (profile.active) { %>checked
+                                            <% } %>>
+                                            <label class="form-check-label" for="activeBox">
+                                                Active
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="saveDeviceAddForm">Save changes</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="saveDeviceAddForm">Save changes</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <% } %>
         </div>
-        <% } %>
-
     </section>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
