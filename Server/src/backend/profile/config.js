@@ -1,20 +1,16 @@
 const common = require("common")
 const ConfigurationProfile = common.utils.profile.ConfigurationProfile
-const databaseHandler = common.utils.database.mongodb
 const logger = common.utils.logging.logger
 
 const profileSchema = require("./profile")
 
-var containerMongoDb = null
-
 class ServerConfigurationProfile extends ConfigurationProfile {
     constructor(mongoDb) {
         super()
-        containerMongoDb = mongoDb
+        this.database = mongoDb
     }
 
     async initialize() {
-        this.database = await databaseHandler(containerMongoDb)
         this.profileClass = await this.database.model(this.collection, profileSchema(this.database))
         if (!(await this.get())) {
             await this.profileClass.create({}).catch(err => {
