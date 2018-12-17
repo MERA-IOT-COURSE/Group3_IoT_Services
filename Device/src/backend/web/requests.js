@@ -5,6 +5,21 @@ const Sensors = common.models.protocol.enums.Sensors
 const Device = common.models.protocol.entities.Device
 const Sensor = common.models.protocol.entities.Sensor
 
+function getActions(array, actionsDict) {
+    return [].concat(array).map(action => {
+        for (var defAction in actionsDict.Common) {
+            if (defAction === action) {
+                return { id: action, name: actionsDict.Common[action] }
+            }
+        }
+        for (var defAction in actionsDict.Custom) {
+            if (defAction === action) {
+                return { id: action, name: actionsDict.Custom[action] }
+            }
+        }
+    })
+}
+
 class Requests extends AbstractRequests {
     constructor(configurationProfile) {
         super()
@@ -27,19 +42,7 @@ class Requests extends AbstractRequests {
             profile.active = req.body["active"]
             profile.device = new Device(req.body["device[id]"], req.body["device[name]"], [])
             if (req.body["device[actions][]"] !== "null") {
-                var actions = [].concat(req.body["device[actions][]"])
-                profile.device.actions = actions.map(action => {
-                    for (var deviceAction in Actions.Device.Common) {
-                        if (deviceAction === action) {
-                            return { id: action, name: Actions.Device.Common[action] }
-                        }
-                    }
-                    for (var deviceAction in Actions.Device.Custom) {
-                        if (deviceAction === action) {
-                            return { id: action, name: Actions.Device.Custom[action] }
-                        }
-                    }
-                })
+                profile.device.actions = getActions(req.body["device[actions][]"], Actions.Device)
             } else {
                 profile.device.actions = []
             }
@@ -50,19 +53,7 @@ class Requests extends AbstractRequests {
             var profile = this.configurationProfile.get()
             var sensor = new Sensor(req.body["sensor[id]"], req.body["sensor[type]"])
             if (req.body["sensor[actions][]"] !== "null") {
-                var actions = [].concat(req.body["sensor[actions][]"])
-                sensor.actions = actions.map(action => {
-                    for (var sensorAction in Actions.Sensor.Common) {
-                        if (sensorAction === action) {
-                            return { id: action, name: Actions.Sensor.Common[action] }
-                        }
-                    }
-                    for (var sensorAction in Actions.Sensor.Custom) {
-                        if (sensorAction === action) {
-                            return { id: action, name: Actions.Sensor.Custom[action] }
-                        }
-                    }
-                })
+                sensor.actions = getActions(req.body["sensor[actions][]"], Actions.Sensor)
             } else {
                 sensor.actions = []
             }
@@ -78,7 +69,7 @@ class Requests extends AbstractRequests {
             for (var key in req.body) {
                 switch (key) {
                     case "backendId":
-                        profile[key] = req.body[key]
+                        profile.backendID = req.body[key]
                         break
                     case "broker[host]":
                         profile.broker.host = req.body[key]
@@ -87,7 +78,7 @@ class Requests extends AbstractRequests {
                         profile.broker.port = req.body[key]
                         break
                     case "active":
-                        profile.active = req.body[key]
+                        profile.active = req.body[key] === "true"
                         break
                     case "device[id]":
                         profile.device.id = req.body[key]
@@ -97,19 +88,7 @@ class Requests extends AbstractRequests {
                         break
                     case "device[actions][]":
                         if (req.body[key] !== "null") {
-                            var actions = [].concat(req.body[key])
-                            profile.device.actions = actions.map(action => {
-                                for (var deviceAction in Actions.Device.Common) {
-                                    if (deviceAction === action) {
-                                        return { id: action, name: Actions.Device.Common[action] }
-                                    }
-                                }
-                                for (var deviceAction in Actions.Device.Custom) {
-                                    if (deviceAction === action) {
-                                        return { id: action, name: Actions.Device.Custom[action] }
-                                    }
-                                }
-                            })
+                            profile.device.actions = getActions(req.body[key], Actions.Device)
                         } else {
                             profile.device.actions = []
                         }
@@ -122,19 +101,7 @@ class Requests extends AbstractRequests {
                         break
                     case "sensor[actions][]":
                         if (req.body[key] !== "null") {
-                            var actions = [].concat(req.body[key])
-                            profile.device.sensors[parseInt(req.body["sensor[index]"])].actions = actions.map(action => {
-                                for (var deviceAction in Actions.Sensor.Common) {
-                                    if (deviceAction === action) {
-                                        return { id: action, name: Actions.Sensor.Common[action] }
-                                    }
-                                }
-                                for (var deviceAction in Actions.Sensor.Custom) {
-                                    if (deviceAction === action) {
-                                        return { id: action, name: Actions.Sensor.Custom[action] }
-                                    }
-                                }
-                            })
+                            profile.device.sensors[parseInt(req.body["sensor[index]"])].actions = getActions(req.body[key], Actions.Sensor)
                         } else {
                             profile.device.sensors[parseInt(req.body["sensor[index]"])].actions = []
                         }
