@@ -1,6 +1,7 @@
 const express = require("express")
 const path = require("path")
 const morgan = require("morgan")
+const bodyParser = require("body-parser")
 const stream = require("../logging/logger").stream
 
 const pattern = ":remote-addr - :remote-user \":method :url HTTP/:http-version\" :status :res[content-length] \":referrer\" \":user-agent\""
@@ -17,6 +18,8 @@ class ServerConfigurator {
         this.app.set("views", path.join(this.server.static, "views"))
         this.app.use(express.static(this.server.static))
         this.app.use(morgan(pattern, { stream: stream }))
+        this.app.use(bodyParser.urlencoded({ extended: false }))
+        this.app.use(bodyParser.json())
         this.server.requests.methods(this.app)
         return this
     }
