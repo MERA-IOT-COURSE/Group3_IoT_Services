@@ -24,7 +24,7 @@ class DeviceConfigurationProfile extends ConfigurationProfile {
     update(profileValues) {
         var values = {}
         values[this.collection] = profileValues
-        this.database.assign(values).value()
+        this.database.assign(values).write()
     }
 }
 
