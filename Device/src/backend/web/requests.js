@@ -48,7 +48,6 @@ class Requests extends AbstractRequests {
         })
         app.post("/profile/sensor", (req, res) => {
             var profile = this.configurationProfile.get()
-            console.log(req.body)
             var sensor = new Sensor(req.body["sensor[id]"], req.body["sensor[type]"])
             if (req.body["sensor[actions][]"] !== "null") {
                 var actions = [].concat(req.body["sensor[actions][]"])
@@ -80,6 +79,7 @@ class Requests extends AbstractRequests {
                 switch (key) {
                     case "backendId":
                         profile[key] = req.body[key]
+                        break
                     case "broker[host]":
                         profile.broker.host = req.body[key]
                         break
@@ -113,8 +113,6 @@ class Requests extends AbstractRequests {
                         } else {
                             profile.device.actions = []
                         }
-                        break
-                    case "sensor[index]":
                         break
                     case "sensor[id]":
                         profile.device.sensors[parseInt(req.body["sensor[index]"])].id = req.body[key]
