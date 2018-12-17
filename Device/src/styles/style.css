@@ -1,14 +1,10 @@
-
-#team {
-    background: #eee !important;
-    height: 100%;
-}
 html {
-    min-height: 100%;
+    height: 100%;
 }
 
 body {
     min-height: 100%;
+    background: #eeeeee !important;
 }
 
 .centered {
@@ -16,6 +12,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 .btn-primary:hover,
 .btn-primary:focus {
     background-color: #108d6f;
@@ -46,8 +43,6 @@ section .section-title {
     background: #ffffff;
     margin-bottom: 30px;
 }
-
-
 
 .mainflip {
     -webkit-transition: 1s;
