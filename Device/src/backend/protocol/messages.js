@@ -10,7 +10,7 @@ const ActionSensorResponse = common.models.protocol.messages.ActionSensorRespons
 const RegisterResponse = common.models.protocol.messages.RegisterResponse
 const SensorResponse = common.models.protocol.messages.SensorDataResponse
 
-class DeviceMessages extends Messages{
+class DeviceMessages extends Messages {
     constructor() {
         super()
         this.database = databaseHandler(`${this.collection}.json`)
