@@ -46,6 +46,7 @@ const ConfigurationProfile = require("./src/utils/profile/config")
 
 const AbstractServer = require("./src/utils/protocol/server")
 const AbstractDevice = require("./src/utils/protocol/device")
+const Messages = require("./src/utils/protocol/messages")
 
 const launcher = require("./src/utils/web/launcher")
 
@@ -109,7 +110,8 @@ module.exports = {
         },
         "protocol": {
             "AbstractServer": AbstractServer,
-            "AbstractDevice": AbstractDevice
+            "AbstractDevice": AbstractDevice,
+            "Messages": Messages
         },
         "web": {
             "launcher": launcher
