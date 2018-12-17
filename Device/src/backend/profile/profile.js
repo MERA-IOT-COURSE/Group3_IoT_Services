@@ -9,7 +9,7 @@ class DeviceProfile {
     constructor(options = {}) {
         this.backendId = options["backendId"] || "group3-be"
         this.broker = new Broker(options["broker"] || {})
-        this.active = options["active"] || true
+        this.active = options["active"] || false
         this.device = options["device"]
     }
 }
