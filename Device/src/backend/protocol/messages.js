@@ -1,14 +1,7 @@
 const common = require("common")
+const MessagesEnum = common.models.protocol.enums.Messages
 const Messages = common.utils.protocol.Messages
 const databaseHandler = common.utils.database.lowdb
-
-const ActionDeviceRequest = common.models.protocol.messages.ActionDeviceRequest
-const ActionSensorRequest = common.models.protocol.messages.ActionSensorRequest
-const RegisterRequest = common.models.protocol.messages.RegisterRequest
-const ActionDeviceResponse = common.models.protocol.messages.ActionDeviceResponse
-const ActionSensorResponse = common.models.protocol.messages.ActionSensorResponse
-const RegisterResponse = common.models.protocol.messages.RegisterResponse
-const SensorResponse = common.models.protocol.messages.SensorDataResponse
 
 class DeviceMessages extends Messages {
     constructor() {
@@ -18,13 +11,9 @@ class DeviceMessages extends Messages {
 
     initialize() {
         var values = {}
-        values[ActionDeviceRequest.message()] = []
-        values[ActionSensorRequest.message()] = []
-        values[RegisterRequest.message()] = []
-        values[ActionDeviceResponse.message()] = []
-        values[ActionSensorResponse.message()] = []
-        values[RegisterResponse.message()] = []
-        values[SensorResponse.message()] = []
+        for (var message in MessagesEnum) {
+            values[MessagesEnum[message]] = []
+        }
         this.database.defaults(values).write()
     }
 

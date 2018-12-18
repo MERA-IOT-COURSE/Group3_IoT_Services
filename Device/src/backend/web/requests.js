@@ -4,6 +4,7 @@ const Actions = common.models.protocol.enums.Actions
 const Sensors = common.models.protocol.enums.Sensors
 const Device = common.models.protocol.entities.Device
 const Sensor = common.models.protocol.entities.Sensor
+const MessagesEnum = common.models.protocol.enums.Messages
 
 function getActions(array, actionsDict) {
     return [].concat(array).map(action => {
@@ -21,17 +22,23 @@ function getActions(array, actionsDict) {
 }
 
 class Requests extends AbstractRequests {
-    constructor(configurationProfile) {
+    constructor(configurationProfile, messages) {
         super()
         this.configurationProfile = configurationProfile
+        this.messages = messages
     }
 
     get(app) {
         app.get("/", (req, res) => {
+            var messages = {
+                "titles": Object.keys(MessagesEnum).map(key => MessagesEnum[key]),
+                "data": Object.keys(MessagesEnum).map(key => this.messages.get(MessagesEnum[key]))
+            }
             res.render("main", {
                 profile: this.configurationProfile.get(),
                 Actions: Actions,
-                Sensors: Sensors
+                Sensors: Sensors,
+                messages: messages
             })
         })
     }

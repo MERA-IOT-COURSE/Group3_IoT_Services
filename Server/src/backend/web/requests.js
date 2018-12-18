@@ -1,16 +1,28 @@
-const AbstractRequests = require("common").models.containers.AbstractRequests
+const common = require("common")
+const AbstractRequests = common.models.containers.AbstractRequests
+const MessagesEnum = common.models.protocol.enums.Messages
 
 class Requests extends AbstractRequests {
-    constructor(configurationProfile) {
+    constructor(configurationProfile, messages) {
         super()
         this.configurationProfile = configurationProfile
+        this.messages = messages
     }
 
     get(app) {
         app.get("/", async (req, res) => {
             var profile = await this.configurationProfile.get()
+            var data = []
+            for (var key in MessagesEnum) {
+                data.push(await this.messages.get(MessagesEnum[key]))
+            }
+            var messages = {
+                "titles": Object.keys(MessagesEnum).map(key => MessagesEnum[key]),
+                "data": data.map(entity => entity[0].data)
+            }
             res.render("main", {
-                profile: profile
+                profile: profile,
+                messages: messages
             })
         })
     }

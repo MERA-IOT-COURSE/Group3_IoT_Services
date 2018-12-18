@@ -60,3 +60,17 @@ section .section-title {
 .card-title {
     color: #007b5e !important;
 }
+
+.nav-link {
+    color: #007b5e !important;
+    background-color: #ffffff !important;
+}
+
+.nav-link.active {
+    background-color: #007b5e !important;
+    color: #ffffff !important;
+}
+
+.modal-lg {
+    max-width: 80% !important;
+}
