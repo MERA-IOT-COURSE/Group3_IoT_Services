@@ -11,8 +11,9 @@ const Action = require("./src/models/protocol/entities/action")
 const Sensor = require("./src/models/protocol/entities/sensor")
 const Message = require("./src/models/protocol/entities/message")
 
-const Actions = require("./src/models/protocol/enums/actions")
-const Sensors = require("./src/models/protocol/enums/sensors")
+const ActionsEnum = require("./src/models/protocol/enums/actions")
+const MessagesEnum = require("./src/models/protocol/enums/messages")
+const SensorsEnum = require("./src/models/protocol/enums/sensors")
 
 const ActionDeviceRequestData = require("./src/models/protocol/data/request.action.device")
 const ActionSensorRequestData = require("./src/models/protocol/data/request.action.sensor")
@@ -69,8 +70,9 @@ module.exports = {
                 "Message": Message
             },
             "enums": {
-                "Actions": Actions,
-                "Sensors": Sensors
+                "Actions": ActionsEnum,
+                "Messages": MessagesEnum,
+                "Sensors": SensorsEnum
             },
             "data": {
                 "ActionDeviceRequestData": ActionDeviceRequestData,
