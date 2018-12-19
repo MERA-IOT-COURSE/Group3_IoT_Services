@@ -3,10 +3,11 @@ const AbstractRequests = common.models.containers.AbstractRequests
 const MessagesEnum = common.models.protocol.enums.Messages
 
 class Requests extends AbstractRequests {
-    constructor(configurationProfile, messages) {
+    constructor(configurationProfile, messages, devices) {
         super()
         this.configurationProfile = configurationProfile
         this.messages = messages
+        this.devices = devices
     }
 
     get(app) {
@@ -20,9 +21,11 @@ class Requests extends AbstractRequests {
                 "titles": Object.keys(MessagesEnum).map(key => MessagesEnum[key]),
                 "data": data.map(entity => entity[0].data)
             }
+            var devices = await this.devices.get()
             res.render("main", {
                 profile: profile,
-                messages: messages
+                messages: messages,
+                devices: devices
             })
         })
     }

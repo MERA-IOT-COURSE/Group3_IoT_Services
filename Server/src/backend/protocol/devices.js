@@ -12,7 +12,8 @@ class Devices {
             _id: { type: String, default: "" },
             name: { type: String, default: "" },
             sensors: { type: [] },
-            actions: { type: [] }
+            actions: { type: [] },
+            active: { type: Boolean }
         })
 
         this.devicesClass = await this.database.model(this.collection, divicesSchema)
@@ -43,7 +44,8 @@ class Devices {
                 _id: device.id,
                 name: device.name,
                 sensors: device.sensors,
-                actions: device.actions
+                actions: device.actions,
+                active: device.active
             },
             { upsert: true }
         ).catch(err => {

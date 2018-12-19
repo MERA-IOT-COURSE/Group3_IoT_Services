@@ -220,6 +220,71 @@
                 </div>
                 <!-- ./Team member -->
             </div>
+
+            <!-- Device -->
+            <% for (var i = 0; i < devices.length; i++) { %>
+            <div class="row">
+                <!-- Team member -->
+                <div class="col-xs-12 col-sm-6 col-md-12">
+                    <div class="mainflip">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">Device
+                                </h4>
+                                <p class="card-text">
+                                    <b>ID</b>:
+                                    <%= devices[i].id %>
+                                    </br>
+                                    <b>Name</b>:
+                                    <%= devices[i].name %>
+                                    </br>
+                                    <b>Sensors</b>:
+                                    <%= devices[i].sensors.length %>
+                                    <% if (devices[i].actions.length > 0) { %>
+                                    </br>
+                                    <b>Actions</b>:
+                                    <%= devices[i].actions.map(action => `[ID: ${action.id}, name: ${action.name}]`).join(", ") %>
+                                    <% } %>
+                                    </br>
+                                    <b>Active</b>:
+                                    <%= devices[i].active %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ./Team member -->
+
+            <!-- Sensors -->
+            <% for (var j = 0; j < devices[i].sensors.length; j++) { %>
+            <div class="row justify-content-end">
+                <!-- Team member -->
+                <div class="col-xs-11 col-sm-4 col-md-11">
+                    <div class="mainflip">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">Sensor
+                                </h4>
+                                <p class="card-text">
+                                    <b>ID</b>:
+                                    <%= devices[i].sensors[j].id %>
+                                    </br>
+                                    <b>Type</b>:
+                                    <%= devices[i].sensors[j].type %>
+                                    <% if (devices[i].sensors[j].actions.length > 0) { %>
+                                    </br>
+                                    <b>Actions</b>:
+                                    <%= devices[i].sensors[j].actions.map(action => `[ID: ${action.id}, name: ${action.name}]`).join(", ") %>
+                                    <% } %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            <% } %>
         </div>
     </section>
     <!-- Optional JavaScript -->
