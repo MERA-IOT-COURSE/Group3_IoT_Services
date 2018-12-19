@@ -6,6 +6,7 @@ const databaseHandler = common.utils.database.mongodb
 
 const ConfigurationProfile = require("./src/backend/profile/config")
 const Messages = require("./src/backend/protocol/messages")
+const Devices = require("./src/backend/protocol/devices")
 const Requests = require("./src/backend/web/requests")
 
 const static = require("path").join(__dirname, "./src")
@@ -18,7 +19,10 @@ databaseHandler(mongoDb).then(async database => {
     const messages = new Messages(database)
     await messages.initialize()
 
-    const requests = new Requests(configurationProfile, messages)
+    const devices = new Devices(database)
+    await devices.initialize()
+
+    const requests = new Requests(configurationProfile, messages, devices)
 
     const server = new Server({
         static: static,
