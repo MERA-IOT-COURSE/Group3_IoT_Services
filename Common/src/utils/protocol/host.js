@@ -13,7 +13,13 @@ class AbstractHost {
     init(profile) {
         this.profile = profile
 
-        logger.info("Begin to setup host")
+        if (this.client == null || !this.client.connected) {
+            logger.info("Begin to setup host")
+        } else {
+            logger.info("Begin to re-setup host")
+            this.client.end()
+        }
+
         logger.debug(`Connecting to the broker: ${JSON.stringify(this.profile.broker)}`)
         this.client = MQTT.connect(`mqtt://${this.profile.broker.host}:${this.profile.broker.port}`)
         this.client.on("connect", () => {
@@ -79,8 +85,8 @@ class AbstractHost {
             }
         } catch (error) {
             logger.error("Couldn't disconnect from the broker, connection closed forcibly")
-            this.client = null
         }
+        this.client = null
     }
 
     closeClientAndExit() {
