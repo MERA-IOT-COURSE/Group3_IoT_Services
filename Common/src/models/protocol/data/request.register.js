@@ -8,7 +8,7 @@ class RegisterRequestData extends Entity {
         var device = Device.parse({
             "hw_id": data["hw_id"],
             "name": data["name"],
-            "sensors": data["sensors"],
+            "sensors": data.hasOwnProperty("sensors") ? data["sensors"] : [],
             "actions": data.hasOwnProperty("actions") ? data["actions"] : []
         })
         return new RegisterRequestData(version, device)
