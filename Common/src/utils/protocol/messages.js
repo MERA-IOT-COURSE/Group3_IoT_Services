@@ -13,7 +13,15 @@ class Messages {
         throw new AbstractNotImplementedError()
     }
 
-    save(message, data) {
+    saveIncoming(topic, message, data, datetime = new Date()) {
+        this.save(topic, message, data, "INCOMING", datetime)
+    }
+
+    saveOutcoming(topic, message, data, datetime = new Date()) {
+        this.save(topic, message, data, "OUTCOMING", datetime)
+    }
+
+    save(topic, message, data, comment, datetime = new Date()) {
         throw new AbstractNotImplementedError()
     }
 }

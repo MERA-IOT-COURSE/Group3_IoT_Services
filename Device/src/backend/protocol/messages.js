@@ -21,7 +21,10 @@ class DeviceMessages extends Messages {
         return this.database.get(message).value()
     }
 
-    save(message, data) {
+    save(topic, message, data, comment, datetime = new Date()) {
+        data["topic"] = topic
+        data["comment"] = comment
+        data["datetime"] = datetime
         this.database.get(message).push(data).write()
     }
 }

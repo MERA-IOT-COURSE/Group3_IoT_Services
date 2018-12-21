@@ -13,21 +13,15 @@ const RegisterRequestData = require("../../models/protocol/data/request.register
 const AbstractNotImplementedError = require("../errors/implementation").AbstractNotImplementedError
 
 class AbstractDevice extends AbstractHost {
-    constructor(broker, backendId, device) {
-        super(broker)
-        this.backendId = backendId
-        this.device = device
-    }
-
     prepare() {
         this.client.on("message", (topic, messageData, packet) => { this.getMessage(topic, messageData) })
-        this.subscribe(`dev_${this.device.id}`)
-        var registerRequestData = new RegisterRequestData(version, this.device)
-        this.sendMessage(RegisterRequest, `init_${this.backendId}`, registerRequestData)
+        this.subscribe(`dev_${this.profile.device.id}`)
+        var registerRequestData = new RegisterRequestData(version, this.profile.device)
+        this.sendMessage(RegisterRequest, `init_${this.profile.backendId}`, registerRequestData)
     }
 
     topicsListener(topic, message) {
-        if (topic === `dev_${this.device.id}`) {
+        if (topic === `dev_${this.profile.device.id}`) {
             switch (message.messageId) {
                 case RegisterResponse.message():
                     if (message.data.status !== "OK") {
@@ -39,13 +33,13 @@ class AbstractDevice extends AbstractHost {
                     var actionDeviceResponseData = this.handleMessageWithResult(ActionDeviceRequest, topic, message.data, () => {
                         return this.handleActionDeviceRequest(message.data)
                     })
-                    this.sendMessage(ActionDeviceResponse, `be_${this.device.id}`, actionDeviceResponseData)
+                    this.sendMessage(ActionDeviceResponse, `be_${this.profile.device.id}`, actionDeviceResponseData)
                     break
                 case ActionSensorRequest.message():
                     var actionSensorResponseData = this.handleMessageWithResult(ActionSensorRequest, topic, message.data, () => {
                         return this.handleActionSensorRequest(message.data)
                     })
-                    this.sendMessage(ActionSensorResponse, `be_${this.device.id}`, actionSensorResponseData)
+                    this.sendMessage(ActionSensorResponse, `be_${this.profile.device.id}`, actionSensorResponseData)
                     break
                 default:
                     break
@@ -66,7 +60,7 @@ class AbstractDevice extends AbstractHost {
     }
 
     sendSensorDataResponse(sensorData) {
-        this.sendMessage(SensorDataResponse, `be_${this.device.id}`, sensorData)
+        this.sendMessage(SensorDataResponse, `be_${this.profile.device.id}`, sensorData)
     }
 }
 
