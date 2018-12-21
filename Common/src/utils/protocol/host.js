@@ -10,7 +10,7 @@ class AbstractHost {
         this.client = null
     }
 
-    init(profile) {
+    initialize(profile) {
         this.profile = profile
 
         if (this.client == null || !this.client.connected) {
