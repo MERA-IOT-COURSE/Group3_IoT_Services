@@ -5,20 +5,23 @@ const AbstractNotImplementedError = require("../errors/implementation").Abstract
 const logger = require("../logging/logger").logger
 
 class AbstractHost {
-    constructor(broker) {
-        this.broker = broker
+    constructor(messages) {
+        this.messages = messages
         this.client = null
     }
 
-    init() {
+    init(profile) {
+        this.profile = profile
+
         logger.info("Begin to setup host")
-        logger.debug(`Connecting to the broker: ${JSON.stringify(this.broker)}`)
-        this.client = MQTT.connect(`mqtt://${this.broker.host}:${this.broker.port}`)
+        logger.debug(`Connecting to the broker: ${JSON.stringify(this.profile.broker)}`)
+        this.client = MQTT.connect(`mqtt://${this.profile.broker.host}:${this.profile.broker.port}`)
         this.client.on("connect", () => {
             logger.debug("Connected to the broker")
             this.prepare()
             logger.info("Host is prepared")
         })
+
         process.on("exit", () => this.closeClientAndExit())
         process.on("SIGINT", () => process.exit())
         process.on("uncaughtException", () => process.exit())
@@ -45,12 +48,14 @@ class AbstractHost {
 
     handleMessage(exchangeInstance, topic, data, callback) {
         logger.debug(`The message was got ('${exchangeInstance.message()}' <- '${topic}'):\n - ${JSON.stringify(data.properties())}`)
+        this.messages.saveIncoming(topic, exchangeInstance.message(), data)
         callback()
         logger.debug(`The message was handled ('${exchangeInstance.message()}' <- '${topic}')`)
     }
 
     handleMessageWithResult(exchangeInstance, topic, data, callback) {
         logger.debug(`The message was got ('${exchangeInstance.message()}' <- '${topic}'):\n - ${JSON.stringify(data.properties())}`)
+        this.messages.saveIncoming(topic, exchangeInstance.message(), data)
         var result = callback()
         logger.debug(`The message was handled ('${exchangeInstance.message()}' <- '${topic}')`)
         return result
@@ -58,6 +63,7 @@ class AbstractHost {
 
     sendMessage(exchangeInstance, topic, data) {
         logger.debug(`Sending the message ('${exchangeInstance.message()}' -> '${topic}'):\n - ${JSON.stringify(data.properties())}`)
+        this.messages.saveOutcoming(topic, exchangeInstance.message(), data)
         this.client.publish(topic, new exchangeInstance(data).create())
         logger.debug(`The message was sent ('${exchangeInstance.message()}' -> '${topic}')`)
     }

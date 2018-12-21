@@ -4,6 +4,11 @@ const AbstractServer = common.utils.protocol.AbstractServer
 const logger = common.utils.logging.logger
 
 class ProtocolServer extends AbstractServer {
+    constructor(messages, devices) {
+        super(messages)
+        this.devices = devices
+    }
+
     handleRegisterRequest(deviceId, registerRequestData) {
         logger.info(`Handle register response for '${deviceId}' device`)
         return new RegisterResponseData("OK")

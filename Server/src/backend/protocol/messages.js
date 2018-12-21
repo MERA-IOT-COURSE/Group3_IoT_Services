@@ -40,7 +40,11 @@ class ServerMessages extends Messages {
         }
     }
 
-    async save(message, data) {
+    async save(topic, message, data, comment, datetime = new Date()) {
+        data["topic"] = topic
+        data["comment"] = comment
+        data["datetime"] = datetime
+
         var updatedData = []
         if ((await this.get(message)).length !== 0) {
             var currentData = await this.messageClass.findOne({ message: message }, { data: 1, _id: 0 })

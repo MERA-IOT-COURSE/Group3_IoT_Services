@@ -13,21 +13,16 @@ const RegisterResponseData = require("../../models/protocol/data/response.regist
 const AbstractNotImplementedError = require("../errors/implementation").AbstractNotImplementedError
 
 class AbstractServer extends AbstractHost {
-    constructor(broker, backendId) {
-        super(broker)
-        this.backendId = backendId
-    }
-
     prepare() {
         this.client.on("message", (topic, messageData, packet) => { this.getMessage(topic, messageData) })
-        this.subscribe(`init_${this.backendId}`)
+        this.subscribe(`init_${this.profile.backendId}`)
     }
 
     topicsListener(topic, message) {
-        if (topic === `init_${this.backendId}`) {
+        if (topic === `init_${this.profile.backendId}`) {
             switch (message.messageId) {
                 case RegisterRequest.message():
-                    var registerResponseData = this.handleMessageWithResult(RegisterRequest, `init_${this.backendId}`, message.data, () => {
+                    var registerResponseData = this.handleMessageWithResult(RegisterRequest, `init_${this.profile.backendId}`, message.data, () => {
                         return this.getRegisterResponse(message.data.device.id, message.data)
                     })
                     if (registerResponseData.status === "OK") {
