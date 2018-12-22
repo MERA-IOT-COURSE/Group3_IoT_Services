@@ -25,11 +25,24 @@
                     <div class="image-flip">
                         <div class="mainflip">
                             <div class="card">
-                                <div class="card-body text-center">
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#messagesModalCenter">
-                                        <i class="fa fa-bars"></i>
-                                    </button>
+                                <div class="row card-body text-center">
+                                    <div class="col-6 text-center">
+                                        <button type="button" class="btn btn-primary btn-sm col-12 text-center"
+                                            data-toggle="modal" data-target="#messagesModalCenter">
+                                            <i class="fa fa-bars"></i>
+                                        </button>
+                                    </div>
+                                    <div class="btn-group-toggle col-6 text-center" data-toggle="buttons">
+                                        <label id="serverActiveStateLabel" class="btn btn-primary btn-sm col-12 text-center <% if (profile.active) { %>
+                                                        active
+                                                        <% } %>">
+                                            <input id="serverActiveStateButton" type="checkbox" <% if (profile.active)
+                                                { %>
+                                            checked
+                                            <% } %>
+                                            autocomplete="off">Active
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -111,9 +124,6 @@
                                     <p class="card-text">
                                         <b>ID</b>:
                                         <%= profile.backendId %>
-                                        </br>
-                                        <b>Active</b>:
-                                        <%= profile.active %>
                                     </p>
                                 </div>
                             </div>
@@ -138,16 +148,6 @@
                                             <label for="serverID">Server ID</label>
                                             <input class="form-control" id="serverID" placeholder="Enter Server ID"
                                                 value="<%= profile.backendId %>">
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="activeBox" <%
-                                                if (profile.active) { %>
-                                            checked
-                                            <% } %>
-                                            >
-                                            <label class="form-check-label" for="activeBox">
-                                                Active
-                                            </label>
                                         </div>
                                     </form>
                                 </div>
@@ -296,6 +296,7 @@
         crossorigin="anonymous"></script>
     <script src="../frontend/server.edit.js"></script>
     <script src="../frontend/broker.edit.js"></script>
+    <script src="../frontend/active.check.js"></script>
 </body>
 
 </html>

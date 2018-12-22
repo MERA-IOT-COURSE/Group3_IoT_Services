@@ -21,6 +21,20 @@ body {
     outline: none;
 }
 
+#serverActiveStateLabel {
+    background-color: #424242;
+    border-color: #424242;
+    box-shadow: none;
+    outline: none;
+}
+
+#serverActiveStateLabel.active {
+    background-color: #108d6f;
+    border-color: #108d6f;
+    box-shadow: none;
+    outline: none;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #007b5e;
