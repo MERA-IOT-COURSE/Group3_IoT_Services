@@ -1,6 +1,7 @@
 const common = require("common")
 const AbstractRequests = common.models.containers.AbstractRequests
 const MessagesEnum = common.models.protocol.enums.Messages
+const logger = common.utils.logging.logger
 
 class Requests extends AbstractRequests {
     constructor(protocol, configurationProfile) {
@@ -17,6 +18,13 @@ class Requests extends AbstractRequests {
     get(app) {
         app.get("/", async (req, res) => {
             var profile = await this.configurationProfile.get()
+            var devices = await this.protocol.devices.get()
+            res.render("main", {
+                profile: profile,
+                devices: devices
+            })
+        })
+        app.get("/messages", async (req, res) => {
             var data = []
             for (var key in MessagesEnum) {
                 data.push(await this.protocol.messages.get(MessagesEnum[key]))
@@ -25,11 +33,15 @@ class Requests extends AbstractRequests {
                 "titles": Object.keys(MessagesEnum).map(key => MessagesEnum[key]),
                 "data": data.map(entity => entity[0].data)
             }
-            var devices = await this.protocol.devices.get()
-            res.render("main", {
-                profile: profile,
-                messages: messages,
-                devices: devices
+            res.render("messages", {
+                messages: messages
+            }, (err, html) => {
+                if (err) {
+                    logger.error(err)
+                    throw err
+                } else {
+                    res.send(html)
+                }
             })
         })
     }
@@ -71,7 +83,7 @@ class Requests extends AbstractRequests {
         })
         app.put("/active", async (req, res) => {
             var profile = await this.configurationProfile.get()
-            
+
             var changeProtocolHandlerState = profile.active !== (req.body["active"] === "true")
             profile.active = req.body["active"] === "true"
 
