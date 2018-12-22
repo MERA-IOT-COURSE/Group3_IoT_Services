@@ -61,43 +61,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
-                                            aria-orientation="vertical">
-                                            <% for (var i = 0; i < messages.titles.length; i++) { %>
-                                            <% var classes = "nav-link" %>
-                                            <% if (i == 0) { %>
-                                            <% classes += " active" %>
-                                            <% } %>
-                                            <a class="<%= classes %>" id="v-pills-<%= i %>-tab" data-toggle="pill" href="#v-pills-<%= i %>"
-                                                role="tab" aria-controls="v-pills-<%= i %>" aria-selected="true">
-                                                <%= messages.titles[i] %>
-                                            </a>
-                                            <% } %>
-                                        </div>
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="tab-content" id="v-pills-tabContent">
-                                            <% for (var i = 0; i < messages.titles.length; i++) { %>
-                                            <% var classes = "tab-pane fade" %>
-                                            <% if (i == 0) { %>
-                                            <% classes += " show active" %>
-                                            <% } %>
-                                            <div class="<%= classes %>" id="v-pills-<%= i %>" role="tabpanel"
-                                                aria-labelledby="v-pills-<%= i %>-tab">
-                                                <% if (messages.data[i].length > 0) { %>
-                                                <pre><%- messages.data[i].reverse().map(entity => JSON.stringify(entity, null, 4).replace(/(?:\r\n|\r|\n)/g, "<br>")).join("<hr>") %></pre>
-                                                <% } else { %>
-                                                <pre>No values</pre>
-                                                <% } %>
-                                            </div>
-                                            <% } %>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="modal-body"></div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
@@ -453,8 +417,8 @@
                                             <label for="sensorType-<%= i %>">Sensor Type</label>
                                             <select class="custom-select" id="sensorType-<%= i %>">
                                                 <% for (var type in Sensors.Types) { %>
-                                                <option value="<%= Sensors.Types[type] %>" <% if (profile.device.sensors[i].type===type)
-                                                    { %>selected
+                                                <option value="<%= Sensors.Types[type] %>" <% if
+                                                    (profile.device.sensors[i].type===type) { %>selected
                                                     <% } %>>
                                                     <%= Sensors.Types[type] %>
                                                 </option>

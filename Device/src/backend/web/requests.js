@@ -35,15 +35,26 @@ class Requests extends AbstractRequests {
 
     get(app) {
         app.get("/", (req, res) => {
+            res.render("main", {
+                profile: this.configurationProfile.get(),
+                Actions: ActionsEnums,
+                Sensors: SensorsEnums
+            })
+        })
+        app.get("/messages", (req, res) => {
             var messages = {
                 "titles": Object.keys(MessagesEnum).map(key => MessagesEnum[key]),
                 "data": Object.keys(MessagesEnum).map(key => this.protocol.messages.get(MessagesEnum[key]))
             }
-            res.render("main", {
-                profile: this.configurationProfile.get(),
-                Actions: ActionsEnums,
-                Sensors: SensorsEnums,
+            res.render("messages", {
                 messages: messages
+            }, (err, html) => {
+                if (err) {
+                    logger.error(err)
+                    throw err
+                } else {
+                    res.send(html)
+                }
             })
         })
     }
