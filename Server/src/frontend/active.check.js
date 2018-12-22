@@ -8,6 +8,7 @@ $("#serverActiveStateButton").change(function () {
         },
         error: function () {
             alert("Failed")
+            window.location.reload()
         }
     })
 })

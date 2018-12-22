@@ -35,6 +35,7 @@ $(function () {
             },
             error: function () {
                 alert("Failed")
+                window.location.reload()
             }
         })
     })
