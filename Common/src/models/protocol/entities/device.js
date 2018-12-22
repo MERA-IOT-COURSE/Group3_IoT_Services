@@ -14,6 +14,19 @@ class Device extends Entity {
         return new Device(id, name, sensors, actions)
     }
 
+    static transform(data) {
+        const Sensor = require("./sensor")
+        const Action = require("./action")
+
+        var id = data["id"]
+        var name = data["name"]
+        var sensors = data.hasOwnProperty("sensors") && data["sensors"] !== null ?
+            data["sensors"].map((sensor) => { return Sensor.parse(sensor) }) : []
+        var actions = data.hasOwnProperty("actions") && data["actions"] !== null ?
+            data["actions"].map((action) => { return Action.parse(action) }) : []
+        return new Device(id, name, sensors, actions)
+    }
+
     constructor(id, name, sensors = [], actions = []) {
         super()
         this.id = id

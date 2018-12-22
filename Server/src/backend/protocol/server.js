@@ -11,6 +11,16 @@ class ProtocolServer extends AbstractServer {
 
     handleRegisterRequest(deviceId, registerRequestData) {
         logger.info(`Handle register response for '${deviceId}' device`)
+        var device = {
+            id: registerRequestData.device.id,
+            name: registerRequestData.device.name,
+            sensors: registerRequestData.device.sensors,
+            actions: registerRequestData.device.actions,
+            active: true
+        }
+        this.devices.save(device).catch(err => {
+            logger.error(err)
+        })
         return new RegisterResponseData("OK")
     }
 
