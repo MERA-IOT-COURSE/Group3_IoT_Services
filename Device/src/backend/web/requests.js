@@ -108,12 +108,21 @@ class Requests extends AbstractRequests {
                         profile.active = req.body[key] === "true"
                         break
                     case "device[id]":
+                        if (!reSetupProtocolHandler && profile.device.id != req.body[key]) {
+                            reSetupProtocolHandler = true
+                        }
                         profile.device.id = req.body[key]
                         break
                     case "device[name]":
+                        if (!reSetupProtocolHandler && profile.device.name != req.body[key]) {
+                            reSetupProtocolHandler = true
+                        }
                         profile.device.name = req.body[key]
                         break
                     case "device[actions][]":
+                        if (!reSetupProtocolHandler) {
+                            reSetupProtocolHandler = true
+                        }
                         if (req.body[key] !== "null") {
                             profile.device.actions = getActions(req.body[key], ActionsEnums.Device)
                         } else {
@@ -121,12 +130,21 @@ class Requests extends AbstractRequests {
                         }
                         break
                     case "sensor[id]":
+                        if (!reSetupProtocolHandler) {
+                            reSetupProtocolHandler = true
+                        }
                         profile.device.sensors[parseInt(req.body["sensor[index]"])].id = req.body[key]
                         break
                     case "sensor[type]":
+                        if (!reSetupProtocolHandler) {
+                            reSetupProtocolHandler = true
+                        }
                         profile.device.sensors[parseInt(req.body["sensor[index]"])].type = req.body[key]
                         break
                     case "sensor[actions][]":
+                        if (!reSetupProtocolHandler) {
+                            reSetupProtocolHandler = true
+                        }
                         if (req.body[key] !== "null") {
                             profile.device.sensors[parseInt(req.body["sensor[index]"])].actions = getActions(req.body[key], ActionsEnums.Sensor)
                         } else {

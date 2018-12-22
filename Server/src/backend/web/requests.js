@@ -9,7 +9,7 @@ class Requests extends AbstractRequests {
         this.configurationProfile = configurationProfile
     }
 
-    prepare() {
+    async prepare() {
         var profile = await this.configurationProfile.get()
         this.protocol.initialize(profile)
     }
@@ -25,7 +25,7 @@ class Requests extends AbstractRequests {
                 "titles": Object.keys(MessagesEnum).map(key => MessagesEnum[key]),
                 "data": data.map(entity => entity[0].data)
             }
-            var devices = await this.devices.get()
+            var devices = await this.protocol.devices.get()
             res.render("main", {
                 profile: profile,
                 messages: messages,

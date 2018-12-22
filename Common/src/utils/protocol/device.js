@@ -2,6 +2,7 @@ const host = require("./host")
 const AbstractHost = host.AbstractHost
 const version = host.version
 
+const Device = require("../../models/protocol/entities/device")
 const RegisterRequest = require("../../models/protocol/messages/request.register")
 const RegisterResponse = require("../../models/protocol/messages/response.register")
 const SensorDataResponse = require("../../models/protocol/messages/response.sensor")
@@ -16,7 +17,8 @@ class AbstractDevice extends AbstractHost {
     prepare() {
         this.client.on("message", (topic, messageData, packet) => { this.getMessage(topic, messageData) })
         this.subscribe(`dev_${this.profile.device.id}`)
-        var registerRequestData = new RegisterRequestData(version, this.profile.device)
+        var device = Device.transform(this.profile.device)
+        var registerRequestData = new RegisterRequestData(version, device)
         this.sendMessage(RegisterRequest, `init_${this.profile.backendId}`, registerRequestData)
     }
 

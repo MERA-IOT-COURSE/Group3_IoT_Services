@@ -21,12 +21,12 @@ databaseHandler(mongoDb).then(async database => {
     await devices.initialize()
 
     const protocol = new Protocol(messages, devices)
-    protocol.prepare()
 
     const configurationProfile = new ConfigurationProfile(database)
     await configurationProfile.initialize()
 
     const requests = new Requests(protocol, configurationProfile)
+    await requests.prepare()
 
     const server = new Server({
         static: static,

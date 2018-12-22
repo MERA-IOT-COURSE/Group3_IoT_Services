@@ -13,14 +13,15 @@ const messages = new Messages()
 messages.initialize()
 
 const protocol = new Protocol(messages)
-protocol.prepare()
 
 const configurationProfile = new ConfigurationProfile()
 configurationProfile.initialize()
 
 const requests = new Requests(protocol, configurationProfile)
+requests.prepare()
 
 const server = new Server({
+    port: 11297,
     static: static,
     requests: requests
 })

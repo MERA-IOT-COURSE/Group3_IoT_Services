@@ -41,11 +41,11 @@ class ServerMessages extends Messages {
     }
 
     async saveIncoming(topic, message, data, datetime = new Date()) {
-        await save(topic, message, data, "INCOMING", datetime = new Date())
+        await this.save(topic, message, data, "INCOMING", datetime = new Date())
     }
 
     async saveOutcoming(topic, message, data, datetime = new Date()) {
-        await save(topic, message, data, "OUTCOMING", datetime = new Date())
+        await this.save(topic, message, data, "OUTCOMING", datetime = new Date())
     }
 
     async save(topic, message, data, comment, datetime = new Date()) {
