@@ -36,7 +36,6 @@ class Requests extends AbstractRequests {
 
     put(app) {
         app.put("/profile", async (req, res) => {
-            var changeProtocolHandlerState = false
             var reSetupProtocolHandler = false
 
             var profile = await this.configurationProfile.get()
@@ -60,14 +59,21 @@ class Requests extends AbstractRequests {
                         }
                         profile.broker.port = req.body[key]
                         break
-                    case "active":
-                        if (!changeProtocolHandlerState && profile.active != req.body[key]) {
-                            changeProtocolHandlerState = true
-                        }
-                        profile.active = req.body[key] === "true"
-                        break
                 }
             }
+
+            if (profile.active && reSetupProtocolHandler) {
+                this.protocol.initialize(profile)
+            }
+
+            await this.configurationProfile.update(profile)
+            res.send()
+        })
+        app.put("/active", async (req, res) => {
+            var profile = await this.configurationProfile.get()
+            
+            var changeProtocolHandlerState = profile.active !== (req.body["active"] === "true")
+            profile.active = req.body["active"] === "true"
 
             if (changeProtocolHandlerState) {
                 if (profile.active) {
@@ -77,12 +83,7 @@ class Requests extends AbstractRequests {
                 }
             }
 
-            if (reSetupProtocolHandler) {
-                this.protocol.initialize(profile)
-            }
-
             await this.configurationProfile.update(profile)
-            res.send()
         })
     }
 }

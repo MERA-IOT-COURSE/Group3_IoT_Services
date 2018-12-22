@@ -77,7 +77,6 @@ class Requests extends AbstractRequests {
 
     put(app) {
         app.put("/profile", (req, res) => {
-            var changeProtocolHandlerState = false
             var reSetupProtocolHandler = false
 
             var profile = this.configurationProfile.get()
@@ -100,12 +99,6 @@ class Requests extends AbstractRequests {
                             reSetupProtocolHandler = true
                         }
                         profile.broker.port = req.body[key]
-                        break
-                    case "active":
-                        if (!changeProtocolHandlerState && profile.active != req.body[key]) {
-                            changeProtocolHandlerState = true
-                        }
-                        profile.active = req.body[key] === "true"
                         break
                     case "device[id]":
                         if (!reSetupProtocolHandler && profile.device.id != req.body[key]) {
@@ -154,6 +147,19 @@ class Requests extends AbstractRequests {
                 }
             }
 
+            if (profile.active && reSetupProtocolHandler) {
+                this.protocol.initialize(profile)
+            }
+
+            this.configurationProfile.update(profile)
+            res.send()
+        })
+        app.put("/active", (req, res) => {
+            var profile = this.configurationProfile.get()
+
+            var changeProtocolHandlerState = profile.active !== (req.body["active"] === "true")
+            profile.active = req.body["active"] === "true"
+
             if (changeProtocolHandlerState) {
                 if (profile.active) {
                     this.protocol.initialize(profile)
@@ -162,12 +168,7 @@ class Requests extends AbstractRequests {
                 }
             }
 
-            if (reSetupProtocolHandler) {
-                this.protocol.initialize(profile)
-            }
-
             this.configurationProfile.update(profile)
-            res.send()
         })
     }
 
