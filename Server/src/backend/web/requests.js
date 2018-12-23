@@ -100,19 +100,19 @@ class Requests extends AbstractRequests {
             for (var key in req.body) {
                 switch (key) {
                     case "backendId":
-                        if (!reSetupProtocolHandler && profile.backendId != req.body[key]) {
+                        if (!reSetupProtocolHandler && profile.backendId !== req.body[key]) {
                             reSetupProtocolHandler = true
                         }
                         profile.backendId = req.body[key]
                         break
                     case "broker[host]":
-                        if (!reSetupProtocolHandler && profile.broker.host != req.body[key]) {
+                        if (!reSetupProtocolHandler && profile.broker.host !== req.body[key]) {
                             reSetupProtocolHandler = true
                         }
                         profile.broker.host = req.body[key]
                         break
                     case "broker[port]":
-                        if (!reSetupProtocolHandler && profile.broker.port != req.body[key]) {
+                        if (!reSetupProtocolHandler && profile.broker.port !== req.body[key]) {
                             reSetupProtocolHandler = true
                         }
                         profile.broker.port = req.body[key]

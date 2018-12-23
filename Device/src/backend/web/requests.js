@@ -97,65 +97,94 @@ class Requests extends AbstractRequests {
             for (var key in req.body) {
                 switch (key) {
                     case "backendId":
-                        if (!reSetupProtocolHandler && profile.backendId != req.body[key]) {
+                        if (!reSetupProtocolHandler && profile.backendId !== req.body[key]) {
                             reSetupProtocolHandler = true
                         }
                         profile.backendId = req.body[key]
                         break
                     case "broker[host]":
-                        if (!reSetupProtocolHandler && profile.broker.host != req.body[key]) {
+                        if (!reSetupProtocolHandler && profile.broker.host !== req.body[key]) {
                             reSetupProtocolHandler = true
                         }
                         profile.broker.host = req.body[key]
                         break
                     case "broker[port]":
-                        if (!reSetupProtocolHandler && profile.broker.port != req.body[key]) {
+                        if (!reSetupProtocolHandler && profile.broker.port !== req.body[key]) {
                             reSetupProtocolHandler = true
                         }
                         profile.broker.port = req.body[key]
                         break
                     case "device[id]":
-                        if (!reSetupProtocolHandler && profile.device.id != req.body[key]) {
+                        if (!reSetupProtocolHandler && profile.device.id !== req.body[key]) {
                             reSetupProtocolHandler = true
                         }
                         profile.device.id = req.body[key]
                         break
                     case "device[name]":
-                        if (!reSetupProtocolHandler && profile.device.name != req.body[key]) {
+                        if (!reSetupProtocolHandler && profile.device.name !== req.body[key]) {
                             reSetupProtocolHandler = true
                         }
                         profile.device.name = req.body[key]
                         break
                     case "device[actions][]":
-                        if (!reSetupProtocolHandler) {
-                            reSetupProtocolHandler = true
-                        }
                         if (req.body[key] !== "null") {
-                            profile.device.actions = getActions(req.body[key], ActionsEnums.Device)
+                            var actions = getActions(req.body[key], ActionsEnums.Device)
+
+                            if (actions.length === profile.device.actions.length) {
+                                for (var i = 0; i < actions.length; i++) {
+                                    if (!reSetupProtocolHandler && (actions[i].id !== profile.device.actions[i].id ||
+                                        actions[i].name !== profile.device.actions[i].name)) {
+                                        reSetupProtocolHandler = true
+                                    }
+                                }
+                            } else {
+                                reSetupProtocolHandler = true
+                            }
+
+                            profile.device.actions = actions
                         } else {
+                            if (!reSetupProtocolHandler && profile.device.actions.length !== 0) {
+                                reSetupProtocolHandler = true
+                            }
                             profile.device.actions = []
                         }
                         break
                     case "sensor[id]":
-                        if (!reSetupProtocolHandler) {
+                        var index = parseInt(req.body["sensor[index]"])
+                        if (!reSetupProtocolHandler && profile.device.sensors[index].id !== req.body[key]) {
                             reSetupProtocolHandler = true
                         }
-                        profile.device.sensors[parseInt(req.body["sensor[index]"])].id = req.body[key]
+                        profile.device.sensors[index].id = req.body[key]
                         break
                     case "sensor[type]":
-                        if (!reSetupProtocolHandler) {
+                        var index = parseInt(req.body["sensor[index]"])
+                        if (!reSetupProtocolHandler && profile.device.sensors[index].type !== req.body[key]) {
                             reSetupProtocolHandler = true
                         }
-                        profile.device.sensors[parseInt(req.body["sensor[index]"])].type = req.body[key]
+                        profile.device.sensors[index].type = req.body[key]
                         break
                     case "sensor[actions][]":
-                        if (!reSetupProtocolHandler) {
-                            reSetupProtocolHandler = true
-                        }
+                        var index = parseInt(req.body["sensor[index]"])
                         if (req.body[key] !== "null") {
-                            profile.device.sensors[parseInt(req.body["sensor[index]"])].actions = getActions(req.body[key], ActionsEnums.Sensor)
+                            var actions = getActions(req.body[key], ActionsEnums.Sensor)
+
+                            if (actions.length === profile.device.sensors[index].actions.length) {
+                                for (var i = 0; i < actions.length; i++) {
+                                    if (!reSetupProtocolHandler && (actions[i].id !== profile.device.sensors[index].actions[i].id ||
+                                        actions[i].name !== profile.device.sensors[index].actions[i].name)) {
+                                        reSetupProtocolHandler = true
+                                    }
+                                }
+                            } else {
+                                reSetupProtocolHandler = true
+                            }
+
+                            profile.device.sensors[index].actions = actions
                         } else {
-                            profile.device.sensors[parseInt(req.body["sensor[index]"])].actions = []
+                            if (!reSetupProtocolHandler && profile.device.sensors[index].actions.length !== 0) {
+                                reSetupProtocolHandler = true
+                            }
+                            profile.device.sensors[index].actions = []
                         }
                         break
                 }
