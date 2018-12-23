@@ -7,6 +7,7 @@ const AbstractDevice = common.utils.protocol.AbstractDevice
 const logger = common.utils.logging.logger
 
 const Receiver = require("../sensors/receiver")
+const DHT = require("../sensors/dht")
 
 class ProtocolDevice extends AbstractDevice {
     initializeSensors(profile) {
@@ -17,12 +18,20 @@ class ProtocolDevice extends AbstractDevice {
         }
         this.sensors = {}
         for (var i = 0; i < profile.device.sensors.length; i++) {
-            if (profile.device.sensors[i].type === "sensor.receiver") {
-                var receiver = new Receiver()
-                receiver.initialize(profile.device.sensors[i], this)
-                this.sensors[profile.device.sensors[i].id] = receiver
+            switch (profile.device.sensors[i].type) {
+                case "sensor.receiver":
+                    this.registerSensorHandler(new Receiver(), profile, i)
+                    break
+                case "sensor.dht":
+                    this.registerSensorHandler(new DHT(), profile, i)
+                    break
             }
         }
+    }
+
+    registerSensorHandler(handler, profile, index) {
+        handler.initialize(profile.device.sensors[index], this)
+        this.sensors[profile.device.sensors[index].id] = handler
     }
 
     handleRegisterResponse(registerResponseData) {
