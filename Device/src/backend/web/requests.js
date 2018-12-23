@@ -32,6 +32,7 @@ class Requests extends AbstractRequests {
     prepare() {
         var profile = this.configurationProfile.get()
         if (profile.active) {
+            this.protocol.initializeSensors(profile)
             this.protocol.initialize(profile)
         }
     }
@@ -159,6 +160,7 @@ class Requests extends AbstractRequests {
                     case "sensor[type]":
                         var index = parseInt(req.body["sensor[index]"])
                         if (!reSetupProtocolHandler && profile.device.sensors[index].type !== req.body[key]) {
+                            this.protocol.initializeSensors(profile)
                             reSetupProtocolHandler = true
                         }
                         profile.device.sensors[index].type = req.body[key]
@@ -172,16 +174,19 @@ class Requests extends AbstractRequests {
                                 for (var i = 0; i < actions.length; i++) {
                                     if (!reSetupProtocolHandler && (actions[i].id !== profile.device.sensors[index].actions[i].id ||
                                         actions[i].name !== profile.device.sensors[index].actions[i].name)) {
+                                        this.protocol.initializeSensors(profile)
                                         reSetupProtocolHandler = true
                                     }
                                 }
                             } else {
+                                this.protocol.initializeSensors(profile)
                                 reSetupProtocolHandler = true
                             }
 
                             profile.device.sensors[index].actions = actions
                         } else {
                             if (!reSetupProtocolHandler && profile.device.sensors[index].actions.length !== 0) {
+                                this.protocol.initializeSensors(profile)
                                 reSetupProtocolHandler = true
                             }
                             profile.device.sensors[index].actions = []
