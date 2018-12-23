@@ -1,11 +1,14 @@
 const common = require("common")
 const AbstractRequests = common.models.containers.AbstractRequests
 const MessagesEnum = common.models.protocol.enums.Messages
+const ActionDeviceRequestData = common.models.protocol.data.ActionDeviceRequestData
+const ActionSensorRequestData = common.models.protocol.data.ActionSensorRequestData
 const logger = common.utils.logging.logger
 
 class Requests extends AbstractRequests {
-    constructor(protocol, configurationProfile) {
+    constructor(emitter, protocol, configurationProfile) {
         super()
+        this.emitter = emitter
         this.protocol = protocol
         this.configurationProfile = configurationProfile
     }
@@ -43,6 +46,47 @@ class Requests extends AbstractRequests {
                     res.send(html)
                 }
             })
+        })
+        app.get("/device/:deviceIndex/action/:actionIndex", async (req, res) => {
+            this.emitter.once("ActionDeviceResponse", deviceActionResponseData => {
+                res.render("action", {
+                    data: deviceActionResponseData
+                }, (err, html) => {
+                    if (err) {
+                        logger.error(err)
+                        throw err
+                    } else {
+                        res.send(html)
+                    }
+                })
+            })
+
+            var devices = await this.protocol.devices.get()
+            var deviceIndex = parseInt(req.params.deviceIndex)
+            var actionIndex = parseInt(req.params.actionIndex)
+            var actionDeviceRequestData = new ActionDeviceRequestData(devices[deviceIndex].actions[actionIndex].id)
+            this.protocol.sendActionDeviceRequest(devices[deviceIndex].id, actionDeviceRequestData)
+        })
+        app.get("/device/:deviceIndex/sensor/:sensorIndex/action/:actionIndex", async (req, res) => {
+            this.emitter.once("ActionSensorResponse", sensorActionResponseData => {
+                res.render("action", {
+                    data: sensorActionResponseData
+                }, (err, html) => {
+                    if (err) {
+                        logger.error(err)
+                        throw err
+                    } else {
+                        res.send(html)
+                    }
+                })
+            })
+
+            var devices = await this.protocol.devices.get()
+            var deviceIndex = parseInt(req.params.deviceIndex)
+            var sensorIndex = parseInt(req.params.sensorIndex)
+            var actionIndex = parseInt(req.params.actionIndex)
+            var actionDeviceRequestData = new ActionSensorRequestData(devices[deviceIndex].sensors[sensorIndex].actions[actionIndex].id, devices[deviceIndex].sensors[sensorIndex].id)
+            this.protocol.sendActionSensorRequest(devices[deviceIndex].id, actionDeviceRequestData)
         })
     }
 

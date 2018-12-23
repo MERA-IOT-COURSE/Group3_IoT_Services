@@ -4,8 +4,9 @@ const AbstractServer = common.utils.protocol.AbstractServer
 const logger = common.utils.logging.logger
 
 class ProtocolServer extends AbstractServer {
-    constructor(messages, devices) {
+    constructor(emitter, messages, devices) {
         super(messages)
+        this.emitter = emitter
         this.devices = devices
     }
 
@@ -30,10 +31,12 @@ class ProtocolServer extends AbstractServer {
 
     handleActionDeviceResponse(deviceId, deviceActionResponseData) {
         logger.info(`Handle action response from '${deviceId}' device`)
+        this.emitter.emit("ActionDeviceResponse", deviceActionResponseData)
     }
 
     handleActionSensorResponse(deviceId, sensorActionResponseData) {
         logger.info(`Handle action response from '${deviceId}' device's sensor`)
+        this.emitter.emit("ActionSensorResponse", sensorActionResponseData)
     }
 }
 

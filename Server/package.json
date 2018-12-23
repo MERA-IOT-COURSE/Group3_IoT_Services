@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "common": "file:../Common"
+    "common": "file:../Common",
+    "events": "^3.0.0"
   }
 }
