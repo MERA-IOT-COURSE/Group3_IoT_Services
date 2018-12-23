@@ -6,7 +6,7 @@ $(function () {
             type: "GET",
             url: `/device/${deviceIndex}/action/${actionIndex}`,
             success: function (res) {
-                $(".modal-body").html(res)
+                $(`#modalDeviceAction-${deviceIndex}-${actionIndex}`).find(".modal-dialog").find(".modal-content").find(".modal-body").html(res)
             },
             error: function () {
                 alert("Failed")

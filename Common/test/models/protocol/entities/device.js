@@ -20,7 +20,14 @@ describe("Model 'Device'", () => {
     describe("Parsing dictionary to object unsuccessfully", () => {
         it("should not get value(s) from dictionary and create object", () => {
             const data = {}
-            expect(() => Device.parse(data)).to.throw()
+            const model = Device.parse(data)
+            assert.instanceOf(model, Device)
+            expect(model.id).to.be.undefined
+            expect(model.name).to.be.undefined
+            assert.typeOf(model.sensors, "array")
+            assert.equal(model.sensors.length, 0)
+            assert.typeOf(model.actions, "array")
+            assert.equal(model.actions.length, 0)
         })
     })
 
