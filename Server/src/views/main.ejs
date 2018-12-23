@@ -284,7 +284,7 @@
                                     <%= devices[i].sensors[j].actions.map(action => `[ID: ${action.id}, name: ${action.name}]`).join(", ") %>
                                     <% } %>
                                 </p>
-                                <% if (devices[i].actions.length > 0) { %>
+                                <% if (devices[i].sensors[j].actions.length > 0) { %>
                                 <hr>
                                 <div class="row">
                                     <div class="col-12">

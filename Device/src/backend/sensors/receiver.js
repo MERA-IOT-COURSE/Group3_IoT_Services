@@ -36,27 +36,28 @@ function checkSupporting(remote, type) {
     return false
 }
 
-class Receiver extends Sensor {
-    constructor(sensorData, protocol) {
-        super(sensorData, protocol)
+const connectLogger = () => logger.info("LIRC is connected")
+function buttonReceiver(sensorData, protocol) {
+    return (remote, type, repeat) => {
+        if (checkSupporting(remote, type)) {
+            var data = new SensorData(sensorData.id, `RC: ${remote}, B: ${type}`)
+            protocol.sendSensorDataResponse(data)
+        }
     }
+}
 
-    initialize() {
-        lirc.on("connect", () => logger.info("LIRC is connected"))
-        lirc.on("receive", function (remote, type, repeat) {
-            if (checkSupporting(remote, type)) {
-                var sensorData = new SensorData(this.sensorData.id, `RC: ${remote}, B: ${type}`)
-                this.protocol.sendSensorDataResponse(sensorData)
-            }
-        })
+class Receiver extends Sensor {
+    initialize(sensorData, protocol) {
+        this.connectLogger = connectLogger
+        this.buttonReceiver = buttonReceiver(sensorData, protocol)
+
+        lirc.on("connect", this.connectLogger)
+        lirc.on("receive", this.buttonReceiver)
     }
 
     deinitialize() {
-        lirc.disconnect().then(() => {
-            logger.info("LIRC is disconnected")
-        }).catch(err => {
-            logger.error(err)
-        })
+        lirc.removeListener("connect", this.connectLogger)
+        lirc.removeListener("receive", this.buttonReceiver)
     }
 }
 

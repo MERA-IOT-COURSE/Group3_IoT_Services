@@ -418,7 +418,7 @@
                                             <select class="custom-select" id="sensorType-<%= i %>">
                                                 <% for (var type in Sensors.Types) { %>
                                                 <option value="<%= Sensors.Types[type] %>" <% if
-                                                    (profile.device.sensors[i].type===type) { %>selected
+                                                    (profile.device.sensors[i].type===Sensors.Types[type]) { %>selected
                                                     <% } %>>
                                                     <%= Sensors.Types[type] %>
                                                 </option>
