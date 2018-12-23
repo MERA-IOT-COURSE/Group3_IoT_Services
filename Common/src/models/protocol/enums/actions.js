@@ -1,11 +1,13 @@
 module.exports = {
     "Device": {
         "Common": {},
-        "Custom": {}
+        "Custom": {
+            "custom.uname": "Obtain OS unique properties"
+        }
     },
     "Sensor": {
         "Common": {
-            READ: "common.read"
+            "common.read": "Read value of sensor"
         },
         "Custom": {}
     }

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "common": "file:../Common"
+    "common": "file:../Common",
+    "lirc-client": "^2.0.0"
   }
 }
