@@ -213,10 +213,52 @@
                                     <b>Active</b>:
                                     <%= devices[i].active %>
                                 </p>
+                                <% if (devices[i].actions.length > 0) { %>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="text-center">
+                                            <% for (var j = 0; j < devices[i].actions.length; j++) { %>
+                                            <button type="button" class="btn btn-primary btn-sm text-center"
+                                                data-toggle="modal" data-target="#modalDeviceAction-<%= i %>-<%= j %>"
+                                                style="margin:5px;">
+                                                <i class="fa fa-bolt"></i>
+                                                <%= devices[i].actions[j].id %>
+                                            </button>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
                             </div>
                         </div>
                     </div>
                 </div>
+                <% for (var j = 0; j < devices[i].actions.length; j++) { %>
+                <!-- Modal -->
+                <div class="modal fade modalDeviceAction" id="modalDeviceAction-<%= i %>-<%= j %>" tabindex="-1" role="dialog"
+                    aria-labelledby="modalDeviceActionTitle-<%= i %>-<%= j %>" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title centered" id="modalDeviceActionTitle-<%= i %>-<%= j %>">
+                                    Action "
+                                    <%= devices[i].actions[j].id %>:
+                                    <%= devices[i].actions[j].name %>"
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./Modal -->
+                <% } %>
             </div>
             <!-- ./Team member -->
 
@@ -242,10 +284,52 @@
                                     <%= devices[i].sensors[j].actions.map(action => `[ID: ${action.id}, name: ${action.name}]`).join(", ") %>
                                     <% } %>
                                 </p>
+                                <% if (devices[i].actions.length > 0) { %>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="text-center">
+                                            <% for (var k = 0; k < devices[i].sensors[j].actions.length; k++) { %>
+                                            <button type="button" class="btn btn-primary btn-sm text-center"
+                                                data-toggle="modal" data-target="#modalSensorAction-<%= i %>-<%= j %>-<%= k %>"
+                                                style="margin:5px;">
+                                                <i class="fa fa-bolt"></i>
+                                                <%= devices[i].sensors[j].actions[k].id %>
+                                            </button>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
                             </div>
                         </div>
                     </div>
                 </div>
+                <% for (var k = 0; k < devices[i].sensors[j].actions.length; k++) { %>
+                <!-- Modal -->
+                <div class="modal fade modalSensorAction" id="modalSensorAction-<%= i %>-<%= j %>-<%= k %>" tabindex="-1" role="dialog"
+                    aria-labelledby="modalSensorActionTitle-<%= i %>-<%= j %>-<%= k %>" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title centered" id="modalSensorActionTitle-<%= i %>-<%= j %>-<%= k %>">
+                                    Action "
+                                    <%= devices[i].sensors[j].actions[k].id %>:
+                                    <%= devices[i].sensors[j].actions[k].name %>"
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./Modal -->
+                <% } %>
             </div>
             <% } %>
             <% } %>
@@ -262,6 +346,8 @@
     <script src="../frontend/broker.edit.js"></script>
     <script src="../frontend/active.check.js"></script>
     <script src="../frontend/messages.load.js"></script>
+    <script src="../frontend/device.action.exec.js"></script>
+    <script src="../frontend/sensor.action.exec.js"></script>
 </body>
 
 </html>

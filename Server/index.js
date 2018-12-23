@@ -1,3 +1,6 @@
+const EventEmitter = require("events")
+const emitter = new EventEmitter()
+
 const common = require("common")
 const launcher = common.utils.web.launcher
 const Server = common.models.containers.Server
@@ -20,12 +23,12 @@ databaseHandler(mongoDb).then(async database => {
     const devices = new Devices(database)
     await devices.initialize()
 
-    const protocol = new Protocol(messages, devices)
+    const protocol = new Protocol(emitter, messages, devices)
 
     const configurationProfile = new ConfigurationProfile(database)
     await configurationProfile.initialize()
 
-    const requests = new Requests(protocol, configurationProfile)
+    const requests = new Requests(emitter, protocol, configurationProfile)
     await requests.prepare()
 
     const server = new Server({
