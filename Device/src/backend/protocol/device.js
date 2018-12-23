@@ -10,19 +10,19 @@ const Receiver = require("../sensors/receiver")
 
 class ProtocolDevice extends AbstractDevice {
     initializeSensors(profile) {
-        if (this.sensors != null || this.sensors != undefined) {
-            for (var i = 0; i < this.sensors.length; i++) {
-                this.sensors[i].deinitialize()
+        if (this.sensors !== null && this.sensors !== undefined) {
+            for (var sensor in this.sensors) {
+                this.sensors[sensor].deinitialize()
             }
         }
         this.sensors = {}
-        profile.device.sensors.map(sensor => {
-            if (sensor.type === "sensor.receiver") {
-                var receiver = new Receiver(sensor, this)
-                receiver.initialize()
-                this.sensors[sensor.id] = receiver
+        for (var i = 0; i < profile.device.sensors.length; i++) {
+            if (profile.device.sensors[i].type === "sensor.receiver") {
+                var receiver = new Receiver()
+                receiver.initialize(profile.device.sensors[i], this)
+                this.sensors[profile.device.sensors[i].id] = receiver
             }
-        })
+        }
     }
 
     handleRegisterResponse(registerResponseData) {
@@ -39,11 +39,12 @@ class ProtocolDevice extends AbstractDevice {
             var res = null
             switch (actionDeviceRequestData.id) {
                 case "custom.uname":
-                    res = childProcess.execSync("uname", { cwd: __dirname, env: childProcess.env, stdio: "inherit" }).toString("utf8")
+                    res = childProcess.execSync("uname").toString("utf8")
                     break
             }
             return new ActionDeviceResponseData(actionDeviceRequestData.id, res ? "OK" : "Unknown action", res)
         } catch (err) {
+            logger.error(err)
             return new ActionDeviceResponseData(actionDeviceRequestData.id, "Internal server error", err)
         }
     }
@@ -59,6 +60,7 @@ class ProtocolDevice extends AbstractDevice {
             }
             return new ActionSensorResponseData(actionSensorRequestData.id, actionSensorRequestData.sensorId, res ? "OK" : "Unknown action", res)
         } catch (err) {
+            logger.error(err)
             return new ActionSensorResponseData(actionSensorRequestData.id, actionSensorRequestData.sensorId, "Internal server error", err)
         }
     }

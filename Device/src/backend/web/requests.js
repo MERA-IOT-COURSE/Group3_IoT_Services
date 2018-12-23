@@ -73,6 +73,7 @@ class Requests extends AbstractRequests {
             } else {
                 profile.device.actions = []
             }
+            this.protocol.initialize(profile)
             this.configurationProfile.update(profile)
             res.send()
         })
@@ -85,6 +86,8 @@ class Requests extends AbstractRequests {
                 sensor.actions = []
             }
             profile.device.sensors.push(sensor)
+            this.protocol.initializeSensors(profile)
+            this.protocol.initialize(profile)
             this.configurationProfile.update(profile)
             res.send()
         })
@@ -92,6 +95,7 @@ class Requests extends AbstractRequests {
 
     put(app) {
         app.put("/profile", (req, res) => {
+            var reSetupSensors = false
             var reSetupProtocolHandler = false
 
             var profile = this.configurationProfile.get()
@@ -152,15 +156,16 @@ class Requests extends AbstractRequests {
                         break
                     case "sensor[id]":
                         var index = parseInt(req.body["sensor[index]"])
-                        if (!reSetupProtocolHandler && profile.device.sensors[index].id !== req.body[key]) {
+                        if (profile.device.sensors[index].id !== req.body[key]) {
+                            reSetupSensors = true
                             reSetupProtocolHandler = true
                         }
                         profile.device.sensors[index].id = req.body[key]
                         break
                     case "sensor[type]":
                         var index = parseInt(req.body["sensor[index]"])
-                        if (!reSetupProtocolHandler && profile.device.sensors[index].type !== req.body[key]) {
-                            this.protocol.initializeSensors(profile)
+                        if (profile.device.sensors[index].type !== req.body[key]) {
+                            reSetupSensors = true
                             reSetupProtocolHandler = true
                         }
                         profile.device.sensors[index].type = req.body[key]
@@ -172,21 +177,21 @@ class Requests extends AbstractRequests {
 
                             if (actions.length === profile.device.sensors[index].actions.length) {
                                 for (var i = 0; i < actions.length; i++) {
-                                    if (!reSetupProtocolHandler && (actions[i].id !== profile.device.sensors[index].actions[i].id ||
-                                        actions[i].name !== profile.device.sensors[index].actions[i].name)) {
-                                        this.protocol.initializeSensors(profile)
+                                    if (actions[i].id !== profile.device.sensors[index].actions[i].id ||
+                                        actions[i].name !== profile.device.sensors[index].actions[i].name) {
+                                        reSetupSensors = true
                                         reSetupProtocolHandler = true
                                     }
                                 }
                             } else {
-                                this.protocol.initializeSensors(profile)
+                                reSetupSensors = true
                                 reSetupProtocolHandler = true
                             }
 
                             profile.device.sensors[index].actions = actions
                         } else {
-                            if (!reSetupProtocolHandler && profile.device.sensors[index].actions.length !== 0) {
-                                this.protocol.initializeSensors(profile)
+                            if (profile.device.sensors[index].actions.length !== 0) {
+                                reSetupSensors = true
                                 reSetupProtocolHandler = true
                             }
                             profile.device.sensors[index].actions = []
@@ -195,8 +200,13 @@ class Requests extends AbstractRequests {
                 }
             }
 
-            if (profile.active && reSetupProtocolHandler) {
-                this.protocol.initialize(profile)
+            if (profile.active) {
+                if (reSetupSensors) {
+                    this.protocol.initializeSensors(profile)
+                }
+                if (reSetupProtocolHandler) {
+                    this.protocol.initialize(profile)
+                }
             }
 
             this.configurationProfile.update(profile)
@@ -225,12 +235,16 @@ class Requests extends AbstractRequests {
         app.delete("/profile/device", (req, res) => {
             var profile = this.configurationProfile.get()
             profile.device = null
+            this.protocol.initializeSensors(profile)
+            this.protocol.initialize(profile)
             this.configurationProfile.update(profile)
             res.send()
         })
         app.delete("/profile/sensor/:index", (req, res) => {
             var profile = this.configurationProfile.get()
             profile.device.sensors.splice(req.params.index, 1)
+            this.protocol.initializeSensors(profile)
+            this.protocol.initialize(profile)
             this.configurationProfile.update(profile)
             res.send()
         })

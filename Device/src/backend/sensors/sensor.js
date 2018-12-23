@@ -1,12 +1,7 @@
 const AbstractNotImplementedError = require("common").utils.errors.AbstractNotImplementedError
 
 class Sensor {
-    constructor(sensorData, protocol) {
-        this.sensorData = sensorData
-        this.protocol = protocol
-    }
-
-    initialize() {
+    initialize(sensorData, protocol) {
         throw new AbstractNotImplementedError()
     }
 
