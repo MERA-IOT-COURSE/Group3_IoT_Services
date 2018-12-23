@@ -5,6 +5,7 @@ const SensorsEnums = common.models.protocol.enums.Sensors
 const MessagesEnum = common.models.protocol.enums.Messages
 const Device = common.models.protocol.entities.Device
 const Sensor = common.models.protocol.entities.Sensor
+const logger = common.utils.logging.logger
 
 function getActions(array, actionsEnums) {
     return [].concat(array).map(action => {
@@ -30,7 +31,9 @@ class Requests extends AbstractRequests {
 
     prepare() {
         var profile = this.configurationProfile.get()
-        this.protocol.initialize(profile)
+        if (profile.active) {
+            this.protocol.initialize(profile)
+        }
     }
 
     get(app) {
@@ -180,6 +183,7 @@ class Requests extends AbstractRequests {
             }
 
             this.configurationProfile.update(profile)
+            res.send()
         })
     }
 

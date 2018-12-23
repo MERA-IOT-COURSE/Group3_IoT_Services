@@ -4,7 +4,7 @@ $(function () {
             type: "GET",
             url: "/messages",
             success: function (res) {
-                $(".modal-body").html(res)
+                $("#messagesModalCenter").find(".modal-dialog").find(".modal-content").find(".modal-body").html(res)
             },
             error: function () {
                 alert("Failed")

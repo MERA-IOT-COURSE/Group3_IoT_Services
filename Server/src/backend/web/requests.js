@@ -15,7 +15,9 @@ class Requests extends AbstractRequests {
 
     async prepare() {
         var profile = await this.configurationProfile.get()
-        this.protocol.initialize(profile)
+        if (profile.active) {
+            this.protocol.initialize(profile)
+        }
     }
 
     get(app) {
@@ -140,6 +142,7 @@ class Requests extends AbstractRequests {
             }
 
             await this.configurationProfile.update(profile)
+            res.send()
         })
     }
 }

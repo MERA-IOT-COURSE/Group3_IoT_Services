@@ -19,7 +19,10 @@ describe("Model 'RegisterRequestData'", () => {
     describe("Parsing dictionary to object unsuccessfully", () => {
         it("should not get value(s) from dictionary and create object", () => {
             const data = {}
-            expect(() => RegisterRequestData.parse(data)).to.throw()
+            const model = RegisterRequestData.parse(data)
+            assert.instanceOf(model, RegisterRequestData)
+            expect(model.version).to.be.undefined
+            assert.instanceOf(model.device, Device)
         })
     })
 
@@ -31,8 +34,8 @@ describe("Model 'RegisterRequestData'", () => {
             assert.equal(data["version"], model.version)
             assert.equal(data["hw_id"], model.device.id)
             assert.equal(data["name"], model.device.name)
-            assert.typeOf(data["sensors"], "array")
-            assert.equal(data["sensors"].length, 0)
+            expect(data["sensors"]).to.be.undefined
+            expect(data["actions"]).to.be.undefined
         })
     })
 })
