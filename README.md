@@ -154,3 +154,37 @@ Run lint for JavaScript files in all JS modules:
 ```console
 user@host:Group3_IoT_Services$ npm run lint
 ```
+
+#### 4. How to run Server application?
+
+Before running of Server application MQTT Broker and MongoDB are needed to start (see [MQTT Broker](#mqtt-broker) and see [MongoDB](#mongodb)).
+
+Run Server application:
+
+```console
+user@host:Group3_IoT_Services$ cd Server
+user@host:Server$ node index.js
+```
+
+After that, you can open link via browser to watch result:
+
+> http://localhost:11296
+
+![Server](/screens/server.png)
+
+#### 5. How to run Device application?
+
+Before running of Device application MQTT Broker is needed to start (see [MQTT Broker](#mqtt-broker)).
+
+Run Device application:
+
+```console
+user@host:Group3_IoT_Services$ cd Device
+user@host:Device$ node index.js
+```
+
+After that, you can open link via browser to watch result:
+
+> http://localhost:11297
+
+![Device](/screens/device.png)
